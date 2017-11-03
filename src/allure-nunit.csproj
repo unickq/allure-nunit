@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
+    <AssemblyVersion>0.1.0</AssemblyVersion>
+    <FileVersion>0.1.0</FileVersion>
+    <Version>0.1.0</Version>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Authors>Nick Chursin</Authors>
+    <Description>NUnit attributes extenstions for Allure</Description>
+    <PackageId>NUnit.Allure</PackageId>
+    <AssemblyName>NUnit.Allure</AssemblyName>
+    <RootNamespace>NUnit.Allure</RootNamespace>
+    <PackageProjectUrl>https://github.com/unickq/allure-nunit</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/unickq/allure-nunit</RepositoryUrl>
+    <PackageLicenseUrl>https://github.com/unickq/allure-nunit/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageTags>nunit allure</PackageTags>
+    <PackageReleaseNotes>Init.Seems about right</PackageReleaseNotes>
+    <PackageIconUrl>https://raw.githubusercontent.com/unickq/allure-nunit/master/logo.png</PackageIconUrl>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Allure.Commons" Version="2.1.1" />
+    <PackageReference Include="NUnit" Version="3.6.0" />
+  </ItemGroup>
+
+</Project>
