@@ -1,0 +1,1 @@
+# Allure NUnit adapter
