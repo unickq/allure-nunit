@@ -6,7 +6,7 @@ using Allure.Commons;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 
-namespace NUnit.Allure.Attributes
+namespace NUnit.Allure
 {
     public abstract class BaseAllureAttribute : Attribute, ITestAction
     {

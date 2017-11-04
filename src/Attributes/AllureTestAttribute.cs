@@ -1,25 +1,22 @@
 ﻿using System;
-using Allure.Commons;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 
 namespace NUnit.Allure.Attributes
 {
     [AttributeUsage(AttributeTargets.Method)]
-    public class AllureSeverityAttribute : BaseAllureAttribute
+    public class AllureTestAttribute : BaseAllureAttribute
     {
-        private string Severity { get; }
+        private string Description { get; }
 
-        public AllureSeverityAttribute(AllureSeverity severity = AllureSeverity.Normal)
+        public AllureTestAttribute(string description = "")
         {
-            Severity = severity.ToString().ToLower();
+            Description = description;
         }
-
 
         public override void AfterTest(ITest test)
         {
-            Allure.UpdateTestCase(x => x.labels.Add(Label.Severity(Severity)));
-
+            if (!string.IsNullOrEmpty(Description)) Allure.UpdateTestCase(x => x.description = Description);
             base.AfterTest(test);
         }
 

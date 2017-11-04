@@ -8,16 +8,19 @@ namespace NUnit.Allure.Attributes
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
     public class AllureStoryAttribute : BaseAllureAttribute
     {
-        private string Value { get; }
+        private string[] Stories { get; }
 
-        public AllureStoryAttribute(string story)
+        public AllureStoryAttribute(params string[] story)
         {
-            Value = story;
+            Stories = story;
         }
 
         public override void AfterTest(ITest test)
         {
-            Allure.UpdateTestCase(x => x.labels.Add(Label.Story(Value)));
+            foreach (var story in Stories)
+            {
+                Allure.UpdateTestCase(x => x.labels.Add(Label.Story(story)));
+            }
             base.AfterTest(test);
         }
 

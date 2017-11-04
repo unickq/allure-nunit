@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using NUnit.Allure.Attributes;
 using NUnit.Framework;
 
@@ -10,13 +11,13 @@ namespace NUnit.Allure
     public class Class1
     {
         [Test]
-        [AllureTag("1")]
+        [AllureTest]
+        [AllureTag("1", "2", "3")]
         [AllureTag("2")]
         [AllureTag("3")]
         [AllureSeverity(AllureSeverity.Critical)]
         [AllureIssue("Issue1", "http://ya.ru")]
         [AllureIssue("Issu2", "http://ya.ru")]
-        [AllureSeverity(AllureSeverity.Critical)]
         public void Xxx1()
         {
             throw new NotFiniteNumberException("ASDSADASDSADSADAS");
@@ -28,7 +29,6 @@ namespace NUnit.Allure
         [AllureSeverity(AllureSeverity.Critical)]
         [AllureIssue("Issue33", "http://ya.ru")]
         [AllureIssue("Issu2", "http://ya.ru")]
-        [AllureSeverity(AllureSeverity.Critical)]
         public void Xxx2()
         {
             Assert.Ignore();
@@ -40,11 +40,10 @@ namespace NUnit.Allure
         [AllureSeverity(AllureSeverity.Critical)]
         [AllureIssue("Issue33", "http://ya.ru")]
         [AllureIssue("Issu2", "http://ya.ru")]
-        [AllureSeverity(AllureSeverity.Trivial)]
         [AllureFeature("FASDQWE")]
-        public void Xxx3()
+        public void Xxx3([Range(0.2, 0.6, 0.2)] double d)
         {
-            Assert.Pass();
+            Assert.Pass(d.ToString(CultureInfo.InvariantCulture));
         }
     }
 
@@ -60,7 +59,6 @@ namespace NUnit.Allure
         [AllureSeverity(AllureSeverity.Critical)]
         [AllureIssue("Issue1", "http://ya.ru")]
         [AllureIssue("Issu2", "http://ya.ru")]
-        [AllureSeverity(AllureSeverity.Critical)]
         public void Xxx1()
         {
             throw new NotFiniteNumberException("ASDSADASDSADSADAS");
@@ -69,10 +67,9 @@ namespace NUnit.Allure
         [Test]
         [AllureTag("1")]
         [AllureTag("2")]
-        [AllureSeverity(AllureSeverity.Critical)]
+        [AllureSeverity(AllureSeverity.Blocker)]
         [AllureIssue("Issue33", "http://ya.ru")]
         [AllureIssue("Issu2", "http://ya.ru")]
-        [AllureSeverity(AllureSeverity.Critical)]
         public void Xxx2()
         {
             Assert.Ignore();
@@ -81,10 +78,9 @@ namespace NUnit.Allure
         [Test]
         [AllureTag("1")]
         [AllureTag("2")]
-        [AllureSeverity(AllureSeverity.Critical)]
         [AllureIssue("Issue33", "http://ya.ru")]
         [AllureIssue("Issu2", "http://ya.ru")]
-        [AllureSeverity(AllureSeverity.Trivial)]
+        [AllureSeverity(AllureSeverity.Minor)]
         [AllureFeature("FASDQWE")]
         public void Xxx3()
         {

@@ -8,16 +8,16 @@ namespace NUnit.Allure.Attributes
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
     public class AllureIssueAttribute : BaseAllureAttribute
     {
-        private Link Link { get; }
+        private Link IssueLink { get; }
 
         public AllureIssueAttribute(string name, string url)
         {
-            Link = new Link {name = name, type = "issue", url = url};
+            IssueLink = new Link {name = name, type = "issue", url = url};
         }
 
         public override void AfterTest(ITest test)
         {
-            Allure.UpdateTestCase(x => x.links.Add(Link));
+            Allure.UpdateTestCase(x => x.links.Add(IssueLink));
             base.AfterTest(test);
         }
 

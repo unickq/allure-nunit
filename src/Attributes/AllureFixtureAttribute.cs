@@ -9,11 +9,11 @@ namespace NUnit.Allure.Attributes
     [AttributeUsage(AttributeTargets.Class)]
     public class AllureFixtureAttribute : BaseAllureAttribute
     {
-        private string Value { get; }
+        private string Description { get; }
 
         public AllureFixtureAttribute(string description = "")
         {
-            Value = description;
+            Description = description;
         }
 
         public override void BeforeTest(ITest test)
@@ -30,7 +30,8 @@ namespace NUnit.Allure.Attributes
         {
             if (test.HasChildren)
                 Allure.UpdateTestContainer(test.Id, t => t.children.AddRange(test.Tests.Select(s => s.Id)));
-            if (!string.IsNullOrEmpty(Value)) Allure.UpdateTestContainer(test.Id, t => t.description = Value);
+            if (!string.IsNullOrEmpty(Description))
+                Allure.UpdateTestContainer(test.Id, t => t.description = Description);
             Allure.StopTestContainer(test.Id);
             Allure.WriteTestContainer(test.Id);
         }

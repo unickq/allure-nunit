@@ -8,17 +8,16 @@ namespace NUnit.Allure.Attributes
     [AttributeUsage(AttributeTargets.Method)]
     public class AllureTmsAttribute : BaseAllureAttribute
     {
-        private Link Link { get; }
+        private Link TmsLink { get; }
 
         public AllureTmsAttribute(string name, string url)
         {
-            Link = new Link {name = name, type = "tms", url = url};
+            TmsLink = new Link {name = name, type = "tms", url = url};
         }
 
         public override void AfterTest(ITest test)
         {
-            Allure.UpdateTestCase(x => x.links.Add(Link));
-
+            Allure.UpdateTestCase(x => x.links.Add(TmsLink));
             base.AfterTest(test);
         }
 
