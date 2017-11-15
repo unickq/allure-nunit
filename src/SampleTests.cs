@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using Allure.Commons;
 using NUnit.Allure.Attributes;
 using NUnit.Framework;
 
@@ -15,7 +16,7 @@ namespace NUnit.Allure
         [AllureTag("1", "2", "3")]
         [AllureTag("2")]
         [AllureTag("3")]
-        [AllureSeverity(AllureSeverity.Critical)]
+        [AllureSeverity(SeverityLevel.critical)]
         [AllureIssue("Issue1", "http://ya.ru")]
         [AllureIssue("Issu2", "http://ya.ru")]
         public void Xxx1()
@@ -26,20 +27,20 @@ namespace NUnit.Allure
         [Test]
         [AllureTag("1")]
         [AllureTag("2")]
-        [AllureSeverity(AllureSeverity.Critical)]
+        [AllureSeverity(SeverityLevel.critical)]
         [AllureIssue("Issue33", "http://ya.ru")]
         [AllureIssue("Issu2", "http://ya.ru")]
         public void Xxx2()
         {
-            Assert.Ignore();
+            Assert.Ignore("I'm just ignored :(");
         }
 
         [Test]
         [AllureTag("1")]
         [AllureTag("2")]
-        [AllureSeverity(AllureSeverity.Critical)]
-        [AllureIssue("Issue33", "http://ya.ru")]
-        [AllureIssue("Issu2", "http://ya.ru")]
+        [AllureSeverity(SeverityLevel.critical)]
+        [AllureIssue("Issue33")]
+        [AllureTms("Issu2", "http://ya.ru")]
         [AllureFeature("FASDQWE")]
         public void Xxx3([Range(0.2, 0.6, 0.2)] double d)
         {
@@ -56,7 +57,7 @@ namespace NUnit.Allure
         [AllureTag("1")]
         [AllureTag("2")]
         [AllureTag("3")]
-        [AllureSeverity(AllureSeverity.Critical)]
+        [AllureSeverity(SeverityLevel.minor)]
         [AllureIssue("Issue1", "http://ya.ru")]
         [AllureIssue("Issu2", "http://ya.ru")]
         public void Xxx1()
@@ -67,7 +68,7 @@ namespace NUnit.Allure
         [Test]
         [AllureTag("1")]
         [AllureTag("2")]
-        [AllureSeverity(AllureSeverity.Blocker)]
+        [AllureSeverity(SeverityLevel.blocker)]
         [AllureIssue("Issue33", "http://ya.ru")]
         [AllureIssue("Issu2", "http://ya.ru")]
         public void Xxx2()
@@ -80,7 +81,7 @@ namespace NUnit.Allure
         [AllureTag("2")]
         [AllureIssue("Issue33", "http://ya.ru")]
         [AllureIssue("Issu2", "http://ya.ru")]
-        [AllureSeverity(AllureSeverity.Minor)]
+        [AllureSeverity(SeverityLevel.minor)]
         [AllureFeature("FASDQWE")]
         public void Xxx3()
         {

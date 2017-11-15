@@ -8,11 +8,11 @@ namespace NUnit.Allure.Attributes
     [AttributeUsage(AttributeTargets.Method)]
     public class AllureSeverityAttribute : BaseAllureAttribute
     {
-        private string Severity { get; }
+        private SeverityLevel Severity { get; }
 
-        public AllureSeverityAttribute(AllureSeverity severity = AllureSeverity.Normal)
+        public AllureSeverityAttribute(SeverityLevel severity = SeverityLevel.normal)
         {
-            Severity = severity.ToString().ToLower();
+            Severity = severity;
         }
 
 

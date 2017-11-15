@@ -10,9 +10,9 @@ namespace NUnit.Allure.Attributes
     {
         private Link IssueLink { get; }
 
-        public AllureIssueAttribute(string name, string url)
+        public AllureIssueAttribute(string name, string url = null)
         {
-            IssueLink = new Link {name = name, type = "issue", url = url};
+            IssueLink = new Link { name = name, type = "issue", url = url };
         }
 
         public override void AfterTest(ITest test)

@@ -10,9 +10,9 @@ namespace NUnit.Allure.Attributes
     {
         private Link TmsLink { get; }
 
-        public AllureTmsAttribute(string name, string url)
+        public AllureTmsAttribute(string name, string url = null)
         {
-            TmsLink = new Link {name = name, type = "tms", url = url};
+            TmsLink = new Link { name = name, type = "tms", url = url };
         }
 
         public override void AfterTest(ITest test)

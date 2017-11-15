@@ -28,7 +28,10 @@ namespace NUnit.Allure
                     {
                         Label.Suite(test.ClassName),
                         Label.Thread(),
-                        Label.Host()
+                        Label.Host(),
+                        Label.TestClass(test.ClassName),
+                        Label.TestMethod(test.MethodName),
+                        Label.Package(test.Fixture.ToString())
                     }
                 };
                 Allure.StartTestCase(testResult);
@@ -54,13 +57,13 @@ namespace NUnit.Allure
 
         public abstract ActionTargets Targets { get; }
 
-        private ITestAction[] GetCurrentActions(ITest test)
+        private static IEnumerable<ITestAction> GetCurrentActions(ITest test)
         {
             var props = test.GetType().GetProperties(BindingFlags.Instance | BindingFlags.NonPublic);
             return (ITestAction[]) props[props.Length - 1].GetValue(test);
         }
 
-        private Status GetNunitStatus(TestStatus status)
+        private static Status GetNunitStatus(TestStatus status)
         {
             switch (status)
             {
