@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using Allure.Commons;
 using NUnit.Allure.Attributes;
 using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 
 namespace NUnit.Allure
 {
@@ -86,6 +88,23 @@ namespace NUnit.Allure
         public void Xxx3()
         {
             Assert.Pass();
+        }
+
+        [Test, TestCaseSource("GetCustomNameTests")]
+        [AllureTest]
+        public void CustomNames(bool data)
+        {
+            Assert.IsTrue(data);
+        }
+
+        public static IEnumerable<ITestCaseData> GetCustomNameTests
+        {
+            get
+            {
+                yield return new TestCaseData(true).SetName("Custom_1");
+                yield return new TestCaseData(true).SetName("Custom_2");
+                yield return new TestCaseData(false).SetName("Custom_3");
+            }
         }
     }
 }
