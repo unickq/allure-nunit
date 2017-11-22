@@ -22,7 +22,7 @@ namespace NUnit.Allure
                 var testResult = new TestResult
                 {
                     uuid = test.Id,
-                    name = test.MethodName,
+                    name = test.Name,
                     fullName = test.FullName,
                     labels = new List<Label>
                     {
