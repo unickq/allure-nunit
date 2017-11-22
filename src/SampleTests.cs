@@ -89,22 +89,5 @@ namespace NUnit.Allure
         {
             Assert.Pass();
         }
-
-        [Test, TestCaseSource("GetCustomNameTests")]
-        [AllureTest]
-        public void CustomNames(bool data)
-        {
-            Assert.IsTrue(data);
-        }
-
-        public static IEnumerable<ITestCaseData> GetCustomNameTests
-        {
-            get
-            {
-                yield return new TestCaseData(true).SetName("Custom_1");
-                yield return new TestCaseData(true).SetName("Custom_2");
-                yield return new TestCaseData(false).SetName("Custom_3");
-            }
-        }
     }
 }
