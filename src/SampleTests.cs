@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using Allure.Commons;
 using NUnit.Allure.Attributes;
 using NUnit.Framework;
-using NUnit.Framework.Interfaces;
 
 namespace NUnit.Allure
 {
@@ -13,14 +11,15 @@ namespace NUnit.Allure
     [AllureFixture("Just fixture example")]
     public class Class1
     {
+        public const string Url = "https://github.com/unickq/allure-nunit/issues?utf8=✓&q=";
+
         [Test]
-        [AllureTest]
         [AllureTag("1", "2", "3")]
         [AllureTag("2")]
         [AllureTag("3")]
         [AllureSeverity(SeverityLevel.critical)]
-        [AllureIssue("Issue1", "http://ya.ru")]
-        [AllureIssue("Issu2", "http://ya.ru")]
+        [AllureIssue("Issue1", Url)]
+        [AllureIssue("Issu2", Url)]
         public void Xxx1()
         {
             throw new NotFiniteNumberException("ASDSADASDSADSADAS");
@@ -30,8 +29,8 @@ namespace NUnit.Allure
         [AllureTag("1")]
         [AllureTag("2")]
         [AllureSeverity(SeverityLevel.critical)]
-        [AllureIssue("Issue33", "http://ya.ru")]
-        [AllureIssue("Issu2", "http://ya.ru")]
+        [AllureIssue("Issue33", Url)]
+        [AllureIssue("Issu2", Url)]
         public void Xxx2()
         {
             Assert.Ignore("I'm just ignored :(");
@@ -41,8 +40,8 @@ namespace NUnit.Allure
         [AllureTag("1")]
         [AllureTag("2")]
         [AllureSeverity(SeverityLevel.critical)]
-        [AllureIssue("Issue33")]
-        [AllureTms("Issu2", "http://ya.ru")]
+        [AllureIssue("Issue33", Url)]
+        [AllureTms("Issu2", Url)]
         [AllureFeature("FASDQWE")]
         public void Xxx3([Range(0.2, 0.6, 0.2)] double d)
         {
@@ -60,34 +59,38 @@ namespace NUnit.Allure
         [AllureTag("2")]
         [AllureTag("3")]
         [AllureSeverity(SeverityLevel.minor)]
-        [AllureIssue("Issue1", "http://ya.ru")]
-        [AllureIssue("Issu2", "http://ya.ru")]
+        [AllureIssue("AI1", Class1.Url)]
+        [AllureIssue("AI2", Class1.Url)]
+        [Retry(5)]
         public void Xxx1()
         {
-            throw new NotFiniteNumberException("ASDSADASDSADSADAS");
+            Console.WriteLine("!");
+            Assert.DoesNotThrow(() => throw new NotFiniteNumberException("I'm a exception"));
         }
 
         [Test]
         [AllureTag("1")]
         [AllureTag("2")]
         [AllureSeverity(SeverityLevel.blocker)]
-        [AllureIssue("Issue33", "http://ya.ru")]
-        [AllureIssue("Issu2", "http://ya.ru")]
+        [AllureIssue("q2", Class1.Url)]
+        [AllureIssue("q1", Class1.Url)]
         public void Xxx2()
         {
             Assert.Ignore();
         }
 
-        [Test]
+        [Test(Description = "Test example description")]
         [AllureTag("1")]
         [AllureTag("2")]
-        [AllureIssue("Issue33", "http://ya.ru")]
-        [AllureIssue("Issu2", "http://ya.ru")]
+        [AllureIssue("t1", Class1.Url)]
+        [AllureIssue("t2", Class1.Url)]
         [AllureSeverity(SeverityLevel.minor)]
         [AllureFeature("FASDQWE")]
+        [Retry(5)]
         public void Xxx3()
         {
-            Assert.Pass();
+            Console.WriteLine("WooHoo");
+            Assert.Fail();
         }
     }
 }

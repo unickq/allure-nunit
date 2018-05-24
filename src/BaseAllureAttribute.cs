@@ -16,13 +16,13 @@ namespace NUnit.Allure
         {
             var currentAction = (ITestAction) this;
             var testActions = GetCurrentActions(test);
-
             if (testActions.Last() == currentAction)
             {
                 var testResult = new TestResult
                 {
                     uuid = test.Id,
                     name = test.Name,
+                    historyId = test.FullName,
                     fullName = test.FullName,
                     labels = new List<Label>
                     {
@@ -34,6 +34,8 @@ namespace NUnit.Allure
                         Label.Package(test.Fixture.ToString())
                     }
                 };
+                if (test.Properties.ContainsKey("Description"))
+                    testResult.descriptionHtml = test.Properties.Get("Description").ToString();
                 Allure.StartTestCase(testResult);
             }
         }
@@ -50,6 +52,7 @@ namespace NUnit.Allure
                     message = TestContext.CurrentContext.Result.Message,
                     trace = TestContext.CurrentContext.Result.StackTrace
                 });
+
                 Allure.StopTestCase(x => x.status = GetNunitStatus(TestContext.CurrentContext.Result.Outcome.Status));
                 Allure.WriteTestCase(test.Id);
             }
