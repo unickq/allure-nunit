@@ -51,8 +51,7 @@ namespace NUnit.Allure
                 {
                     message = TestContext.CurrentContext.Result.Message,
                     trace = TestContext.CurrentContext.Result.StackTrace
-                });
-
+                });            
                 Allure.StopTestCase(x => x.status = GetNunitStatus(TestContext.CurrentContext.Result.Outcome.Status));
                 Allure.WriteTestCase(test.Id);
             }

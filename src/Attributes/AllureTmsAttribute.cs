@@ -8,9 +8,15 @@ namespace NUnit.Allure.Attributes
     [AttributeUsage(AttributeTargets.Method)]
     public class AllureTmsAttribute : BaseAllureAttribute
     {
-        public AllureTmsAttribute(string name, string url = null)
+        [Obsolete("Url is configuredi allureConfig.json", false)]
+        public AllureTmsAttribute(string name, string url)
         {
-            TmsLink = new Link {name = name, type = "tms", url = url};
+            TmsLink = new Link { name = name, type = "tms", url = name };
+        }
+
+        public AllureTmsAttribute(string name)
+        {
+            TmsLink = new Link { name = name, type = "tms", url = name };
         }
 
         private Link TmsLink { get; }
@@ -19,6 +25,9 @@ namespace NUnit.Allure.Attributes
 
         public override void AfterTest(ITest test)
         {
+            //Fix for NUnit.Retry
+            if (!TmsLink.url.Equals(TmsLink.name)) TmsLink.url = TmsLink.name;
+
             Allure.UpdateTestCase(x => x.links.Add(TmsLink));
             base.AfterTest(test);
         }

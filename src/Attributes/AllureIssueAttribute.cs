@@ -8,9 +8,15 @@ namespace NUnit.Allure.Attributes
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
     public class AllureIssueAttribute : BaseAllureAttribute
     {
-        public AllureIssueAttribute(string name, string url = null)
+        [Obsolete("Url is configuredi in allureConfig.json", false)]
+        public AllureIssueAttribute(string name, string url)
         {
-            IssueLink = new Link {name = name, type = "issue", url = url};
+            IssueLink = new Link {name = name, type = "issue", url = name};
+        }
+
+        public AllureIssueAttribute(string name)
+        {
+            IssueLink = new Link { name = name, type = "issue", url = name };
         }
 
         private Link IssueLink { get; }
@@ -19,6 +25,9 @@ namespace NUnit.Allure.Attributes
 
         public override void AfterTest(ITest test)
         {
+            //Fix for NUnit.Retry
+            if (!IssueLink.url.Equals(IssueLink.name)) IssueLink.url = IssueLink.name;
+
             Allure.UpdateTestCase(x => x.links.Add(IssueLink));
             base.AfterTest(test);
         }
