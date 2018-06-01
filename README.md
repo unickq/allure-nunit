@@ -4,8 +4,8 @@ NUnit3 adapter for Allure Framework
 [![Build status](https://ci.appveyor.com/api/projects/status/5nomj0qw25bo8gnv?svg=true)](https://ci.appveyor.com/project/unickq/allure-nunit)
 
 ### Installation and Usage
-- Set target framework **.NET 4.6.1** and higher (because of [allure-csharp](https://github.com/allure-framework/allure-csharp))
 - Download from Nuget with all dependencies
+- Configure allureConfig.json
 - Use Allure attributes for Tests and TestFixtures
 
 [![NuGet](http://flauschig.ch/nubadge.php?id=NUnit.Allure)](https://www.nuget.org/packages/NUnit.Allure)
@@ -34,3 +34,11 @@ public class Tests
 ### Allure report:
 
 ![Allure report](https://raw.githubusercontent.com/unickq/allure-nunit/master/AllureScreen.png)
+
+
+
+### ToDo:
+- [x] NET 4.5, NET Standard 2.0 support
+- [ ] Steps Wrapping
+- [ ] Allure SetUp/TearDown support
+- [ ] Attachments
