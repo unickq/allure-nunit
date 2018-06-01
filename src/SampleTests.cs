@@ -61,6 +61,7 @@ namespace NUnit.Allure
         [Retry(5)]
         public void Xxx1()
         {
+            Console.WriteLine(AllureLifecycle.Instance.ResultsDirectory);
             Console.WriteLine("!");
             Assert.DoesNotThrow(() => throw new NotFiniteNumberException("I'm a exception"));
         }
@@ -69,21 +70,20 @@ namespace NUnit.Allure
         [AllureTag("1")]
         [AllureTag("2")]
         [AllureSeverity(SeverityLevel.blocker)]
-        [AllureIssue("JIRA-123")]
-        [AllureIssue("JIRA-12")]
+        [AllureIssue("Allure")]
         public void Xxx2()
         {
             Console.WriteLine(AllureLifecycle.Instance.ResultsDirectory);
             Assert.Ignore();
         }
 
-        [Test(Description = "Test example description")]
-        [AllureTag("1")]
+        [Test(Description = "Retry many times until DateTime.Now.Millisecond < 50")]
+        [AllureTag("Retry")]
         [AllureTag("2")]
-        [AllureIssue("t1")]
+        [AllureIssue("retry")]
         [AllureIssue("t2")]
-        [AllureSeverity(SeverityLevel.minor)]
-        [AllureFeature("FASDQWE")]
+        [AllureSeverity(SeverityLevel.critical)]
+        [AllureFeature("NUnit basic attributes")]
         [Retry(100)]
         public void Xxx3()
         {
