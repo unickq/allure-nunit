@@ -33,8 +33,8 @@ public class Tests
 - [x] Allure SetUp/TearDown support
 - [x] Attachments
 - [x] Parallelizable(ParallelScope.Fixtures)
-- [] Parallelizable(ParallelScope.Children)
-- [] Add ignored (not started) tests to results. Assert.Ignore() works :)
+- [ ] Parallelizable(ParallelScope.Children)
+- [ ] Add ignored (not started) tests to results. Assert.Ignore() works :)
 
 
 ### Installation and Usage
