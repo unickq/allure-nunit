@@ -6,13 +6,13 @@ using NUnit.Framework.Interfaces;
 namespace NUnit.Allure.Attributes
 {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
-    public class AllureTmsAttribute : NUnitAttribute
+    public class AllureSubSuiteAttribute : NUnitAttribute
     {
-        public AllureTmsAttribute(string name, string url = null)
+        public AllureSubSuiteAttribute(string subSuite)
         {
-            TmsLink = new Link { name = name, type = "tms", url = url };
+            SubSuite = subSuite;
         }
 
-        internal Link TmsLink { get; }
+        internal string SubSuite { get; }
     }
 }

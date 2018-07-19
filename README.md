@@ -1,21 +1,17 @@
 # Allure NUnit adapter
 NUnit3 adapter for Allure Framework 
 
-[![Build status](https://ci.appveyor.com/api/projects/status/5nomj0qw25bo8gnv?svg=true)](https://ci.appveyor.com/project/unickq/allure-nunit)
+[![Build status](https://ci.appveyor.com/api/projects/status/5nomj0qw25bo8gnv?svg=true)](https://ci.appveyor.com/project/unickq/allure-nunit)[![NuGet](http://flauschig.ch/nubadge.php?id=NUnit.Allure)](https://www.nuget.org/packages/NUnit.Allure)
 
-### Installation and Usage
-- Download from Nuget with all dependencies
-- Configure allureConfig.json
-- Use Allure attributes for Tests and TestFixtures
+### Allure report:
 
-[![NuGet](http://flauschig.ch/nubadge.php?id=NUnit.Allure)](https://www.nuget.org/packages/NUnit.Allure)
-
+![Allure report](https://raw.githubusercontent.com/unickq/allure-nunit/master/AllureScreen.png)
 
 ### Code example:
 
 ```cs
 [TestFixture]
-[AllureFixture("Description for allure container")]
+[AllureNUnit]
 public class Tests
 {
     [Test]
@@ -29,16 +25,22 @@ public class Tests
         Assert.IsTrue(value % 2 == 0, $"Oh no :( {value} % 2 = {value % 2}" );
     }
 }
-```    
-
-### Allure report:
-
-![Allure report](https://raw.githubusercontent.com/unickq/allure-nunit/master/AllureScreen.png)
-
-
+```  
 
 ### ToDo:
 - [x] NET 4.5, NET Standard 2.0 support
-- [ ] Steps Wrapping
-- [ ] Allure SetUp/TearDown support
-- [ ] Attachments
+- [x] Steps Wrapping - with custom method
+- [x] Allure SetUp/TearDown support
+- [x] Attachments
+- [x] Parallelizable(ParallelScope.Fixtures)
+- [] Parallelizable(ParallelScope.Children)
+- [] Add ignored (not started) tests to results. Assert.Ignore() works :)
+
+
+### Installation and Usage
+- Download from Nuget with all dependencies
+- Configure allureConfig.json
+- Set AllureNUnit attribute under test fixture
+- Use other attributes if needed
+
+[![NuGet](http://flauschig.ch/nubadge.php?id=NUnit.Allure)](https://www.nuget.org/packages/NUnit.Allure)

@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
+using NUnit.Framework;
 
 [assembly: AssemblyTitle("allure-nunit")]
 [assembly: AssemblyDescription("Allure NUnit3 adapter")]
@@ -14,3 +15,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("0.2.2.0")]
 [assembly: AssemblyFileVersion("0.2.2.0")]
 
+[assembly: Parallelizable(ParallelScope.Fixtures)]
