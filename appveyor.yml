@@ -20,7 +20,7 @@ configuration: Release
 platform: Any CPU
 
 before_build:
-- nuget restore
+- nuget restore src\allure-nunit.sln
 
 build:
   verbosity: minimal
