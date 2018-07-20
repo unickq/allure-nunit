@@ -6,6 +6,7 @@ using NUnit.Framework;
 
 namespace NUnit.Allure.TestSamples
 {
+    [AllureDisplayIgnored]
     class TestClass1 : BaseTest
     {
         [SetUp]
@@ -32,12 +33,15 @@ namespace NUnit.Allure.TestSamples
         }
 
         [Test]
-        [AllureSuite("IgnoredSuite")]
-        [AllureSubSuite("NoAssert")]
         [Ignore("I'm just an ignored test")]
-        public void SimpleTestIgnored()
+        public void SimpleTestIgnored1()
         {
-            Console.WriteLine("Ignored");
+        }
+
+        [Test]
+        [Ignore("Not implemented")]
+        public void SimpleTestIgnored2()
+        {
         }
 
         [Test(Author = "unickq")]

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
@@ -20,9 +19,7 @@ namespace NUnit.Allure.Core
         public void BeforeTest(ITest test)
         {
             _allureNUnitHelper.Value = new AllureNUnitHelper(test);
-            _allureNUnitHelper.Value.StartTestContainer();
-            _allureNUnitHelper.Value.StartTestCase();
-            _allureNUnitHelper.Value.StartTestStep(_isWrapedIntoStep);
+            _allureNUnitHelper.Value.StartAll(_isWrapedIntoStep);
         }
 
         public void AfterTest(ITest test)
