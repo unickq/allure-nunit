@@ -16,9 +16,11 @@ namespace NUnit.Allure.Core
         private static AllureLifecycle AllureLifecycle => AllureLifecycle.Instance;
 
         private readonly ITest _test;
-        private string _containerGuid;
 
+        private string _containerGuid;
+        private string _testResultGuid;
         private string _stepGuid;
+
         private StepResult _stepResult;
         bool _isSetupFailed;
 
@@ -29,7 +31,7 @@ namespace NUnit.Allure.Core
 
         public void StartTestContainer()
         {
-            _containerGuid = Guid.NewGuid().ToString();
+            _containerGuid = string.Concat(Guid.NewGuid().ToString(), "-tc-", _test.Id);
             var container = new TestResultContainer
             {
                 uuid = _containerGuid,
@@ -40,9 +42,10 @@ namespace NUnit.Allure.Core
 
         public void StartTestCase()
         {
+            _testResultGuid = string.Concat(Guid.NewGuid().ToString(), "-tr-", _test.Id);
             var testResult = new TestResult
             {
-                uuid = _test.Id,
+                uuid = _testResultGuid,
                 name = _test.Name,
                 historyId = _test.FullName,
                 fullName = _test.FullName,
@@ -98,11 +101,13 @@ namespace NUnit.Allure.Core
 
         public void StartTestStep(bool isWrapedIntoStep)
         {
+            _stepGuid = string.Concat(Guid.NewGuid().ToString(), "-ts-", _test.Id);
             if (isWrapedIntoStep)
             {
-                _stepGuid = Guid.NewGuid().ToString();
+               
                 _stepResult = new StepResult {name = _test.Name};
                 AllureLifecycle.StartStep(_stepGuid, _stepResult);
+                Console.WriteLine(String.Concat(Thread.CurrentThread.ManagedThreadId, " ", _stepGuid, " ", _test.Id));
             }
         }
 
@@ -182,12 +187,11 @@ namespace NUnit.Allure.Core
 
             AllureLifecycle.StopTestCase(testCase =>
                 testCase.status = GetNunitStatus(TestContext.CurrentContext.Result.Outcome.Status));
-            AllureLifecycle.WriteTestCase(TestContext.CurrentContext.Test.ID);
+            AllureLifecycle.WriteTestCase(_testResultGuid);
 
 
             AllureLifecycle.UpdateTestContainer(_containerGuid, cont =>
             {
-                var z = _containerGuid;
                 cont.befores.AddRange(listSetups);
                 cont.afters.AddRange(listTeardowns);
             });

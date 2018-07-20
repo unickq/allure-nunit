@@ -15,4 +15,4 @@ using NUnit.Framework;
 [assembly: AssemblyVersion("0.2.2.0")]
 [assembly: AssemblyFileVersion("0.2.2.0")]
 
-[assembly: Parallelizable(ParallelScope.Fixtures)]
+[assembly: Parallelizable(ParallelScope.Children)]
