@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using Allure.Commons;
+using Allure.Commons.Configuration;
+using Newtonsoft.Json.Linq;
 using NUnit.Allure.Attributes;
 using NUnit.Framework;
 using NUnit.Framework.Interfaces;
@@ -212,22 +215,42 @@ namespace NUnit.Allure.Core
 
         private static Status GetNunitStatus()
         {
-            var status = TestContext.CurrentContext.Result.Outcome.Status;
-            switch (status)
+            var result = TestContext.CurrentContext.Result;
+
+            if (result.Outcome.Status != TestStatus.Passed)
             {
-                case TestStatus.Inconclusive:
-                    return Status.broken;
-                case TestStatus.Skipped:
-                    return Status.skipped;
-                case TestStatus.Passed:
-                    return Status.passed;
-                case TestStatus.Warning:
-                    return Status.broken;
-                case TestStatus.Failed:
-                    return Status.failed;
-                default:
-                    return Status.none;
+                var jo = JObject.Parse(AllureLifecycle.JsonConfiguration);
+                var allureSection = jo["allure"];
+                var config = allureSection?.ToObject<AllureExtendedConfiguration>();
+                if (config?.BrokenTestData != null)
+                {
+                    foreach (var word in config.BrokenTestData)
+                    {
+                        if (result.Message.Contains(word))
+                        {
+                            return Status.broken;
+                        }
+                    }
+                }
+
+                switch (result.Outcome.Status)
+                {
+                    case TestStatus.Inconclusive:
+                        return Status.broken;
+                    case TestStatus.Skipped:
+                        return Status.skipped;
+                    case TestStatus.Passed:
+                        return Status.passed;
+                    case TestStatus.Warning:
+                        return Status.broken;
+                    case TestStatus.Failed:
+                        return Status.failed;
+                    default:
+                        return Status.none;
+                }
             }
+
+            return Status.passed;
         }
 
         private void UpdateTestDataFromAttributes()
