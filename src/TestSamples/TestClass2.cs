@@ -38,21 +38,36 @@ namespace NUnit.Allure.TestSamples
         [AllureSeverity(SeverityLevel.blocker)]
         [AllureSuite("RetrySuite")]
         [AllureParentSuite("With parameters")]
+        [AllureOwner("Nick")]
         public void RetryTest()
         {
             Assert.That(++_retryInt, Is.GreaterThan(3));
         }
 
-        [Test]
+        [Test(Author = "Nick", Description = "Retry example")]
+        [Category("Retry")]
         [Retry(100)]
         [AllureEpic("Retry")]
         [AllureFeature("RetryBig")]
         [AllureSuite("RetrySuite")]
         [AllureSeverity(SeverityLevel.critical)]
+        [AllureTag("tag1", "tag2", "tag3")]
         public void RetryManyTest()
         {
             Assert.That(DateTime.Now.Millisecond, Is.LessThan(50));
         }
 
+        [Test, Pairwise]
+        public void PairWiseTest([Values("a", "b", "c")] string str)
+        {
+            Console.WriteLine(str);
+        }
+
+
+        [Test, Repeat(5)]
+        public void RepeatTest()
+        {
+            Console.WriteLine(DateTime.Now);
+        }
     }
 }

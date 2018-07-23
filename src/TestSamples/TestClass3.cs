@@ -3,7 +3,6 @@ using System;
 using System.IO;
 using Allure.Commons;
 using NUnit.Allure.Attributes;
-using NUnit.Allure.Core;
 using NUnit.Framework;
 
 namespace NUnit.Allure.TestSamples
@@ -30,6 +29,10 @@ namespace NUnit.Allure.TestSamples
         [AllureOwner("unickq")]
         [AllureSuite("Attachment")]
         [AllureSubSuite("Simple")]
+        [AllureLink("Github", "https://github.com")]
+        [AllureLink("https://google.com")]
+        [AllureIssue("ISSUE-123")]
+        [AllureTms("TMS-123")]
         public void AttachmentTwo()
         {
             Console.WriteLine("With Attachment 2");

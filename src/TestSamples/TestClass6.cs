@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Threading;
-using NUnit.Allure.Attributes;
-using NUnit.Allure.Core;
 using NUnit.Framework;
 
 namespace NUnit.Allure.TestSamples
@@ -30,8 +27,7 @@ namespace NUnit.Allure.TestSamples
         [Test]
         public void TestWontRun()
         {
-            Console.WriteLine("Oh no!");
-           
+            Console.WriteLine("Oh no!");          
         }
     }
 }

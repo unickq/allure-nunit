@@ -19,6 +19,8 @@ namespace NUnit.Allure.TestSamples
         [AllureTag("TC-1")]
         [AllureSeverity(SeverityLevel.critical)]
         [AllureIssue("ISSUE-1")]
+        [AllureTms("TMS-12")]
+        [AllureTms("TMS-12", "http://asd.com")]
         [AllureOwner("unickq")]
         [AllureSuite("PassedSuite")]
         [AllureSubSuite("NoAssert")]

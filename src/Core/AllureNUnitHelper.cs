@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Threading;
 using Allure.Commons;
-using Allure.Commons.Configuration;
 using Newtonsoft.Json.Linq;
 using NUnit.Allure.Attributes;
 using NUnit.Framework;
@@ -58,7 +55,8 @@ namespace NUnit.Allure.Core
                     Label.Thread(),
                     Label.Host(),
                     Label.TestClass(_test.ClassName),
-                    Label.TestMethod(_test.MethodName)
+                    Label.TestMethod(_test.MethodName),
+                    Label.Package(_test.ClassName)
                 }
             };
             AllureLifecycle.StartTestCase(_containerGuid, testResult);
@@ -267,6 +265,12 @@ namespace NUnit.Allure.Core
                 AllureLifecycle.UpdateTestCase(x => x.description += $"{list[0].ToString()}\n");
             }
 
+            if (_test.Properties.ContainsKey("Category"))
+            {
+                var list = _test.Properties["Category"];
+                AllureLifecycle.UpdateTestCase(x => x.labels.Add(Label.Tag(list[0].ToString())));
+            }
+
             var attributes = _test.Method.GetCustomAttributes<NUnitAttribute>(true).ToList();
 
             foreach (var attribute in attributes)
@@ -293,6 +297,9 @@ namespace NUnit.Allure.Core
                         break;
                     case AllureTmsAttribute tmsAttr:
                         AllureLifecycle.UpdateTestCase(x => x.links.Add(tmsAttr.TmsLink));
+                        break;
+                    case AllureLinkAttribute linkAttr:
+                        AllureLifecycle.UpdateTestCase(x => x.links.Add(linkAttr.Link));
                         break;
                     case AllureSuiteAttribute suiteAttr:
                         AllureLifecycle.UpdateTestCase(x => x.labels.Add(Label.Suite(suiteAttr.Suite)));

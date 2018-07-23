@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace NUnit.Allure.Attributes
 {
-    [AttributeUsage(AttributeTargets.Method)]
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
     public class AllureOwnerAttribute : NUnitAttribute
     {
         public AllureOwnerAttribute(string owner)

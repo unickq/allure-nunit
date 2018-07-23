@@ -1,7 +1,5 @@
 ﻿using System;
-using Allure.Commons;
 using NUnit.Framework;
-using NUnit.Framework.Interfaces;
 
 namespace NUnit.Allure.Attributes
 {
