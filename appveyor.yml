@@ -1,0 +1,40 @@
+﻿version: 1.0.0.{build}
+
+environment:
+  nugetVersion: 1.0.0
+
+init:
+  - ps: Update-AppveyorBuild -Version $env:nugetVersion
+
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: '{version}'
+  package_version: $(nugetVersion)
+  assembly_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
+
+image: Visual Studio 2017
+configuration: Release
+platform: Any CPU
+
+before_build:
+- nuget restore src\allure-nunit.sln
+
+build:
+  verbosity: minimal
+
+test: off
+
+artifacts:
+- path: '**\NUnit.Allure*.nupkg'
+
+for:
+-
+  branches:
+      only:
+        - develop
+  version: 1.1.0.{build}
+  environment:
+    nugetVersion: 1.1.0-alfa$(APPVEYOR_BUILD_NUMBER)

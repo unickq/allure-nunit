@@ -4,13 +4,13 @@ using NUnit.Framework;
 namespace NUnit.Allure.Attributes
 {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
-    public class AllureTagAttribute : NUnitAttribute
+    public class AllureOwnerAttribute : NUnitAttribute
     {
-        public AllureTagAttribute(params string[] tags)
+        public AllureOwnerAttribute(string owner)
         {
-            Tags = tags;
+            Owner = owner;
         }
 
-        internal string[] Tags { get; }
+        internal string Owner { get; }
     }
 }
