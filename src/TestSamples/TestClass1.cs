@@ -47,6 +47,7 @@ namespace NUnit.Allure.TestSamples
         }
 
         [Test(Author = "unickq")]
+        [Category("SampleTag")]
         [Description("OLOLO")]
         [AllureSuite("FailedSuite")]
         [AllureSubSuite("DoesNotThrow")]

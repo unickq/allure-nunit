@@ -253,23 +253,20 @@ namespace NUnit.Allure.Core
 
         private void UpdateTestDataFromAttributes()
         {
-            if (_test.Properties.ContainsKey("Author"))
-            {
-                var list = _test.Properties["Author"];
-                AllureLifecycle.UpdateTestCase(x => x.labels.Add(Label.Owner(list[0].ToString())));
-            }
+            if (_test.Properties.ContainsKey(PropertyNames.Author))
+                AllureLifecycle.UpdateTestCase(x =>
+                    x.labels.Add(Label.Owner(_test.Properties.Get(PropertyNames.Author).ToString())));
 
-            if (_test.Properties.ContainsKey("Description"))
-            {
-                var list = _test.Properties["Description"];
-                AllureLifecycle.UpdateTestCase(x => x.description += $"{list[0].ToString()}\n");
-            }
 
-            if (_test.Properties.ContainsKey("Category"))
-            {
-                var list = _test.Properties["Category"];
-                AllureLifecycle.UpdateTestCase(x => x.labels.Add(Label.Tag(list[0].ToString())));
-            }
+            if (_test.Properties.ContainsKey(PropertyNames.Description))
+                AllureLifecycle.UpdateTestCase(x =>
+                    x.description += $"{_test.Properties.Get(PropertyNames.Description).ToString()}\n");
+
+
+            if (_test.Properties.ContainsKey(PropertyNames.Category))
+                AllureLifecycle.UpdateTestCase(x =>
+                    x.labels.Add(Label.Tag(_test.Properties.Get(PropertyNames.Category).ToString())));
+
 
             var attributes = _test.Method.GetCustomAttributes<NUnitAttribute>(true).ToList();
 
