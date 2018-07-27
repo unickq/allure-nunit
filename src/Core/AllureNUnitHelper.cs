@@ -182,6 +182,15 @@ namespace NUnit.Allure.Core
         private void StopTestCase()
         {
             UpdateTestDataFromAttributes();
+            for (var i = 0; i < _test.Arguments.Length; i++)
+            {
+                AllureLifecycle.UpdateTestCase(x => x.parameters.Add(new Parameter
+                {
+                    name = $"Param #{i}",
+                    value = _test.Arguments[i].ToString()
+                }));
+            }
+
 
             AllureLifecycle.UpdateTestCase(x => x.statusDetails = new StatusDetails
             {
