@@ -178,7 +178,7 @@ namespace NUnit.Allure.Core
             StopTestContainer(listSetups, listTeardowns);
         }
 
-  
+
         private void StopTestCase()
         {
             UpdateTestDataFromAttributes();
@@ -262,28 +262,18 @@ namespace NUnit.Allure.Core
             return Status.passed;
         }
 
+
         private void UpdateTestDataFromAttributes()
         {
-            if (_test.Properties.ContainsKey(PropertyNames.Author))
-                AllureLifecycle.UpdateTestCase(x =>
-                    x.labels.Add(Label.Owner(_test.Properties.Get(PropertyNames.Author).ToString())));
+            foreach (var p in GetTestProperties(PropertyNames.Description))
+                AllureLifecycle.UpdateTestCase(x => x.description += $"{p}\n");
 
-            if (_test.Properties.ContainsKey(PropertyNames.Description))
-                AllureLifecycle.UpdateTestCase(x =>
-                    x.description += $"{_test.Properties.Get(PropertyNames.Description).ToString()}\n");
+            foreach (var p in GetTestProperties(PropertyNames.Author))
+                AllureLifecycle.UpdateTestCase(x => x.labels.Add(Label.Owner(p)));
 
-            if (GetTestFixture(_test).Properties.ContainsKey(PropertyNames.Category))
-                AllureLifecycle.UpdateTestCase(x =>
-                    x.labels.Add(Label.Tag(GetTestFixture(_test).Properties.Get(PropertyNames.Category).ToString())));
+            foreach (var p in GetTestProperties(PropertyNames.Category))
+                AllureLifecycle.UpdateTestCase(x => x.labels.Add(Label.Tag(p)));
 
-            if (_test.Parent.Properties.ContainsKey(PropertyNames.Category))
-                AllureLifecycle.UpdateTestCase(x =>
-                    x.labels.Add(Label.Tag(_test.Parent.Properties.Get(PropertyNames.Category).ToString())));
-
-            if (_test.Properties.ContainsKey(PropertyNames.Category))
-                AllureLifecycle.UpdateTestCase(x =>
-                    x.labels.Add(Label.Tag(_test.Properties.Get(PropertyNames.Category).ToString())));
-           
             var attributes = _test.Method.GetCustomAttributes<NUnitAttribute>(true).ToList();
 
             foreach (var attribute in attributes)
@@ -332,6 +322,29 @@ namespace NUnit.Allure.Core
                             x.labels.Add(Label.ParentSuite(parentSuiteAttr.ParentSuite)));
                         break;
                 }
+        }
+
+        private IEnumerable<string> GetTestProperties(string name)
+        {
+            var list = new List<string>();
+            var currentTest = _test;
+            while (currentTest.GetType() != typeof(TestSuite))
+            {
+                if (currentTest.Properties.ContainsKey(name))
+                {
+                    if (currentTest.Properties[name].Count > 0)
+                    {
+                        for (var i = 0; i < currentTest.Properties[name].Count; i++)
+                        {
+                            list.Add(currentTest.Properties[name][i].ToString());
+                        }
+                    }
+                }
+
+                currentTest = currentTest.Parent;
+            }
+
+            return list;
         }
 
         public void WrapInStep(Action action, string stepName = "")
