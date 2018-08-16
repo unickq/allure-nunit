@@ -31,7 +31,7 @@ namespace NUnit.Allure.Core
 
         private void StartTestContainer()
         {
-            var testFixture = GetTestFixture();
+            var testFixture = GetTestFixture(_test);
             _containerGuid = string.Concat(Guid.NewGuid().ToString(), "-tc-", testFixture.Id);
             var container = new TestResultContainer
             {
@@ -62,9 +62,9 @@ namespace NUnit.Allure.Core
             AllureLifecycle.StartTestCase(_containerGuid, testResult);
         }
 
-        private TestFixture GetTestFixture()
+        private TestFixture GetTestFixture(ITest test)
         {
-            var currentTest = _test;
+            var currentTest = test;
             var isTestSuite = currentTest.IsSuite;
             while (isTestSuite != true)
             {
@@ -138,7 +138,7 @@ namespace NUnit.Allure.Core
 
         public void StopAll(bool isWrapedIntoStep)
         {
-            var testFixture = GetTestFixture();
+            var testFixture = GetTestFixture(_test);
 
             var listSetups = BuildFixtureResults(NUnitHelpMethodType.SetUp, testFixture);
             var listTeardowns = BuildFixtureResults(NUnitHelpMethodType.TearDown, testFixture);
@@ -168,8 +168,7 @@ namespace NUnit.Allure.Core
                     }
                     else
                     {
-                        step.status =
-                            GetNunitStatus();
+                        step.status = GetNunitStatus();
                     }
                 });
             }
@@ -179,6 +178,7 @@ namespace NUnit.Allure.Core
             StopTestContainer(listSetups, listTeardowns);
         }
 
+  
         private void StopTestCase()
         {
             UpdateTestDataFromAttributes();
@@ -186,7 +186,9 @@ namespace NUnit.Allure.Core
             {
                 AllureLifecycle.UpdateTestCase(x => x.parameters.Add(new Parameter
                 {
+                    // ReSharper disable once AccessToModifiedClosure
                     name = $"Param #{i}",
+                    // ReSharper disable once AccessToModifiedClosure
                     value = _test.Arguments[i].ToString()
                 }));
             }
@@ -220,7 +222,7 @@ namespace NUnit.Allure.Core
             if (isWrapedIntoStep) StartTestStep();
         }
 
-        private static Status GetNunitStatus()
+        internal static Status GetNunitStatus()
         {
             var result = TestContext.CurrentContext.Result;
 
@@ -266,17 +268,22 @@ namespace NUnit.Allure.Core
                 AllureLifecycle.UpdateTestCase(x =>
                     x.labels.Add(Label.Owner(_test.Properties.Get(PropertyNames.Author).ToString())));
 
-
             if (_test.Properties.ContainsKey(PropertyNames.Description))
                 AllureLifecycle.UpdateTestCase(x =>
                     x.description += $"{_test.Properties.Get(PropertyNames.Description).ToString()}\n");
 
+            if (GetTestFixture(_test).Properties.ContainsKey(PropertyNames.Category))
+                AllureLifecycle.UpdateTestCase(x =>
+                    x.labels.Add(Label.Tag(GetTestFixture(_test).Properties.Get(PropertyNames.Category).ToString())));
+
+            if (_test.Parent.Properties.ContainsKey(PropertyNames.Category))
+                AllureLifecycle.UpdateTestCase(x =>
+                    x.labels.Add(Label.Tag(_test.Parent.Properties.Get(PropertyNames.Category).ToString())));
 
             if (_test.Properties.ContainsKey(PropertyNames.Category))
                 AllureLifecycle.UpdateTestCase(x =>
                     x.labels.Add(Label.Tag(_test.Properties.Get(PropertyNames.Category).ToString())));
-
-
+           
             var attributes = _test.Method.GetCustomAttributes<NUnitAttribute>(true).ToList();
 
             foreach (var attribute in attributes)
@@ -327,27 +334,34 @@ namespace NUnit.Allure.Core
                 }
         }
 
+        public void WrapInStep(Action action, string stepName = "")
+        {
+            AllureLifecycle.WrapInStep(action, stepName);
+        }
+    }
 
-        public static void WrapInStep(Action action, string stepName = "")
+    public static class AllureExtensions
+    {
+        public static void WrapInStep(this AllureLifecycle lifecycle, Action action, string stepName = "")
         {
             var id = Guid.NewGuid().ToString();
             var stepResult = new StepResult {name = stepName};
             try
             {
-                AllureLifecycle.StartStep(id, stepResult);
+                lifecycle.StartStep(id, stepResult);
                 action.Invoke();
-                AllureLifecycle.StopStep(step => stepResult.status = Status.passed);
+                lifecycle.StopStep(step => stepResult.status = Status.passed);
             }
             catch (Exception e)
             {
-                AllureLifecycle.StopStep(step =>
+                lifecycle.StopStep(step =>
                 {
                     step.statusDetails = new StatusDetails
                     {
                         message = e.Message,
                         trace = e.StackTrace
                     };
-                    step.status = GetNunitStatus();
+                    step.status = AllureNUnitHelper.GetNunitStatus();
                 });
                 throw;
             }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using Allure.Commons;
 using NUnit.Allure.Attributes;
 using NUnit.Allure.Core;
 using NUnit.Framework;
@@ -17,7 +18,7 @@ namespace NUnit.Allure.TestSamples
         {
             foreach (var str in _adeleSong)
             {
-                AllureNUnitHelper.WrapInStep(() =>
+                AllureLifecycle.Instance.WrapInStep(() =>
                 {
                     Thread.Sleep(100 * new Random().Next(1, 10));
                     Console.WriteLine(str + Environment.NewLine);
