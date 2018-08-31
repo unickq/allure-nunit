@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace NUnit.Allure.Attributes
 {
-    [AttributeUsage(AttributeTargets.Method)]
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
     public class AllureSeverityAttribute : NUnitAttribute
     {
         public AllureSeverityAttribute(SeverityLevel severity = SeverityLevel.normal)

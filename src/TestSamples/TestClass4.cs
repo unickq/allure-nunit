@@ -8,25 +8,23 @@ using NUnit.Framework;
 namespace NUnit.Allure.TestSamples
 {
     [TestFixture]
+    [AllureSuite("With parameters")]
+    [AllureTag("Parametrized Tests")]
+    [AllureSeverity(SeverityLevel.critical)]
     class TestClass4 : BaseTest
     {
         [Test]
-        [AllureTag("NUnit", "Debug")]
         [AllureIssue("GitHub#1", "https://github.com/unickq/allure-nunit")]
-        [AllureSeverity(SeverityLevel.minor)]
-        [AllureFeature("Core")]
-        [AllureSuite("RetrySuite")]
         [AllureSubSuite("Range")]
-        [AllureParentSuite("With parameters")]
+        [AllureTag("Range")]
         public void EvenTest([Range(0, 5)] int value)
         {
             Console.WriteLine("Hi there");
             Assert.IsTrue(value % 2 == 0, $"Oh no :( {value} % 2 = {value % 2}");
         }
 
-        [AllureSuite("TestCaseSource")]
         [AllureSubSuite("Returns")]
-        [AllureParentSuite("With parameters")]
+        [AllureTag("TestCaseSource")]
         [Test, TestCaseSource(typeof(TestDataClass), nameof(TestDataClass.TestCasesReturns))]
         public int DivideTestReturns(int n, int d)
         {
@@ -34,9 +32,8 @@ namespace NUnit.Allure.TestSamples
             return n / d;
         }
 
-        [AllureSuite("TestCaseSource")]
         [AllureSubSuite("Simple")]
-        [AllureParentSuite("With parameters")]
+        [AllureTag("TestCaseSource")]
         [Test, TestCaseSource(typeof(TestDataClass), nameof(TestDataClass.TestCases))]
         public void DivideTest(int n, int d, int r)
         {

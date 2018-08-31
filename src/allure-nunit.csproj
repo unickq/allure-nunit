@@ -2,9 +2,9 @@
 
   <PropertyGroup>
     <TargetFrameworks>net45;netstandard20</TargetFrameworks>
-    <AssemblyVersion>1.0.2</AssemblyVersion>
-    <FileVersion>1.0.2</FileVersion>
-    <Version>1.0.2</Version>
+    <AssemblyVersion>1.0.3</AssemblyVersion>
+    <FileVersion>1.0.3</FileVersion>
+    <Version>1.0.3</Version>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>Nick Chursin</Authors>
     <Description>NUnit attributes extenstions for Allure</Description>

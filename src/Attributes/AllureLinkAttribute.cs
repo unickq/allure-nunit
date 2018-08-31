@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 namespace NUnit.Allure.Attributes
 {
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = true)]
     public class AllureLinkAttribute : NUnitAttribute
     {
         public AllureLinkAttribute(string name, string url)

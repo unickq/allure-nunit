@@ -3,7 +3,7 @@ using NUnit.Framework;
 
 namespace NUnit.Allure.Attributes
 {
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
+    [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = true)]
     public class AllureTagAttribute : NUnitAttribute
     {
         public AllureTagAttribute(params string[] tags)

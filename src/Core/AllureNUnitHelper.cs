@@ -275,6 +275,7 @@ namespace NUnit.Allure.Core
                 AllureLifecycle.UpdateTestCase(x => x.labels.Add(Label.Tag(p)));
 
             var attributes = _test.Method.GetCustomAttributes<NUnitAttribute>(true).ToList();
+            attributes.AddRange(GetTestFixture(_test).GetCustomAttributes<NUnitAttribute>(true).ToList());
 
             foreach (var attribute in attributes)
                 switch (attribute)
