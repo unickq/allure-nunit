@@ -9,12 +9,12 @@ namespace NUnit.Allure.Attributes
     {
         public AllureIssueAttribute(string name, string url)
         {
-            IssueLink = new Link { name = name, type = "issue", url = url };
+            IssueLink = new Link {name = name, type = "issue", url = url};
         }
 
         public AllureIssueAttribute(string name)
         {
-            IssueLink = new Link { name = name, type = "issue", url = name };
+            IssueLink = new Link {name = name, type = "issue", url = name};
         }
 
         internal Link IssueLink { get; }

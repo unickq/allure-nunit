@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace NUnit.Allure.TestSamples
 {
     [AllureDisplayIgnored]
-    class TestClass1 : BaseTest
+    internal class TestClass1 : BaseTest
     {
         [SetUp]
         public void SetUp()
@@ -24,7 +24,7 @@ namespace NUnit.Allure.TestSamples
         [AllureOwner("unickq")]
         [AllureSuite("PassedSuite")]
         [AllureSubSuite("NoAssert")]
-        [AllureSubSuite("Simple")]      
+        [AllureSubSuite("Simple")]
         public void SimpleTestPassed()
         {
             Task.Run(() => Console.WriteLine("QQQQ"));
@@ -55,10 +55,7 @@ namespace NUnit.Allure.TestSamples
         public void SimpleTestFailed()
         {
             Console.WriteLine("Failed");
-            Assert.DoesNotThrow(() =>
-            {
-                throw new Exception("I'm an exception");
-            });
+            Assert.DoesNotThrow(() => { throw new Exception("I'm an exception"); });
         }
     }
 }

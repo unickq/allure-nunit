@@ -11,8 +11,29 @@ namespace NUnit.Allure.TestSamples
     [AllureSuite("With parameters")]
     [AllureTag("Parametrized Tests")]
     [AllureSeverity(SeverityLevel.critical)]
-    class TestClass4 : BaseTest
+    internal class TestClass4 : BaseTest
     {
+        [AllureSubSuite("Simple")]
+        [AllureTag("TestCaseSource")]
+        [Test]
+        [TestCaseSource(typeof(TestDataClass), nameof(TestDataClass.TestCases))]
+        public void DivideTest(int n, int d, int r)
+        {
+            Thread.Sleep(100 * new Random().Next(1, 25));
+            Console.WriteLine($"Validating {n} / {d} = {r}");
+            Assert.AreEqual(r, n / d);
+        }
+
+        [AllureSubSuite("Returns")]
+        [AllureTag("TestCaseSource")]
+        [Test]
+        [TestCaseSource(typeof(TestDataClass), nameof(TestDataClass.TestCasesReturns))]
+        public int DivideTestReturns(int n, int d)
+        {
+            Console.WriteLine($"Validating {n} / {d} ");
+            return n / d;
+        }
+
         [Test]
         [AllureIssue("GitHub#1", "https://github.com/unickq/allure-nunit")]
         [AllureSubSuite("Range")]
@@ -21,25 +42,6 @@ namespace NUnit.Allure.TestSamples
         {
             Console.WriteLine("Hi there");
             Assert.IsTrue(value % 2 == 0, $"Oh no :( {value} % 2 = {value % 2}");
-        }
-
-        [AllureSubSuite("Returns")]
-        [AllureTag("TestCaseSource")]
-        [Test, TestCaseSource(typeof(TestDataClass), nameof(TestDataClass.TestCasesReturns))]
-        public int DivideTestReturns(int n, int d)
-        {
-            Console.WriteLine($"Validating {n} / {d} ");
-            return n / d;
-        }
-
-        [AllureSubSuite("Simple")]
-        [AllureTag("TestCaseSource")]
-        [Test, TestCaseSource(typeof(TestDataClass), nameof(TestDataClass.TestCases))]
-        public void DivideTest(int n, int d, int r)
-        {
-            Thread.Sleep(100 * new Random().Next(1, 25));
-            Console.WriteLine($"Validating {n} / {d} = {r}");
-            Assert.AreEqual(r, n / d);
         }
     }
 
@@ -54,6 +56,7 @@ namespace NUnit.Allure.TestSamples
                 yield return new TestCaseData(12, 4).Returns(3);
             }
         }
+
         public static IEnumerable TestCases
         {
             get

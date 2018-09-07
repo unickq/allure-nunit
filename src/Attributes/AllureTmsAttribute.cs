@@ -9,12 +9,12 @@ namespace NUnit.Allure.Attributes
     {
         public AllureTmsAttribute(string name, string url)
         {
-            TmsLink = new Link { name = name, type = "tms", url = url };
+            TmsLink = new Link {name = name, type = "tms", url = url};
         }
 
         public AllureTmsAttribute(string name)
         {
-            TmsLink = new Link { name = name, type = "tms", url = name };
+            TmsLink = new Link {name = name, type = "tms", url = name};
         }
 
         internal Link TmsLink { get; }

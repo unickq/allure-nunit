@@ -14,6 +14,7 @@ namespace NUnit.Allure.Attributes
     {
         private readonly string _suiteName;
         private string _ignoredContainerId;
+
         public AllureDisplayIgnoredAttribute(string suiteNameForIgnoredTests = "Ignored")
         {
             _suiteName = suiteNameForIgnoredTests;
@@ -28,7 +29,6 @@ namespace NUnit.Allure.Attributes
                 name = suite.ClassName
             };
             AllureLifecycle.Instance.StartTestContainer(fixture);
-
         }
 
         public void AfterTest(ITest suite)
@@ -36,13 +36,14 @@ namespace NUnit.Allure.Attributes
             suite = (TestSuite) suite;
             if (suite.HasChildren)
             {
-                var ignoredTests = suite.Tests.Where(t => t.RunState == RunState.Ignored || t.RunState == RunState.Skipped);
+                var ignoredTests =
+                    suite.Tests.Where(t => t.RunState == RunState.Ignored || t.RunState == RunState.Skipped);
                 foreach (var test in ignoredTests)
                 {
                     AllureLifecycle.Instance.UpdateTestContainer(_ignoredContainerId, t => t.children.Add(test.Id));
 
                     var reason = test.Properties.Get(PropertyNames.SkipReason).ToString();
-                        
+
                     var ignoredTestResult = new TestResult
                     {
                         uuid = test.Id,
@@ -61,8 +62,8 @@ namespace NUnit.Allure.Attributes
                         }
                     };
                     AllureLifecycle.Instance.StartTestCase(ignoredTestResult);
-                    AllureLifecycle.Instance.StopTestCase(ignoredTestResult.uuid); 
-                    AllureLifecycle.Instance.WriteTestCase(ignoredTestResult.uuid); 
+                    AllureLifecycle.Instance.StopTestCase(ignoredTestResult.uuid);
+                    AllureLifecycle.Instance.WriteTestCase(ignoredTestResult.uuid);
                 }
 
                 AllureLifecycle.Instance.StopTestContainer(_ignoredContainerId);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Allure.Commons;
 using Newtonsoft.Json.Linq;
 using NUnit.Allure.Attributes;
@@ -13,21 +14,29 @@ namespace NUnit.Allure.Core
 {
     public sealed class AllureNUnitHelper
     {
-        private static AllureLifecycle AllureLifecycle => AllureLifecycle.Instance;
+        public enum NUnitHelpMethodType
+        {
+            SetUp,
+            TearDown,
+            OneTimeSetup,
+            OneTimeTearDown
+        }
 
         private readonly ITest _test;
 
         private string _containerGuid;
-        private string _testResultGuid;
+        private bool _isSetupFailed;
         private string _stepGuid;
 
         private StepResult _stepResult;
-        bool _isSetupFailed;
+        private string _testResultGuid;
 
         public AllureNUnitHelper(ITest test)
         {
             _test = test;
         }
+
+        private static AllureLifecycle AllureLifecycle => AllureLifecycle.Instance;
 
         private void StartTestContainer()
         {
@@ -93,14 +102,6 @@ namespace NUnit.Allure.Core
             }
         }
 
-        public enum NUnitHelpMethodType
-        {
-            SetUp,
-            TearDown,
-            OneTimeSetup,
-            OneTimeTearDown
-        }
-
         private void StartTestStep()
         {
             _stepGuid = string.Concat(Guid.NewGuid().ToString(), "-ts-", _test.Id);
@@ -116,37 +117,90 @@ namespace NUnit.Allure.Core
             foreach (var method in GetNUnitHelpMethods(type, testFixture))
             {
                 var fr = new FixtureResult {name = method};
+
+
+                if (fr.start == 0)
+                    fr.start = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+                if (fr.stop == 0)
+                    fr.stop = fr.start;
+
                 if (testResult.StackTrace != null && testResult.StackTrace.Contains(method))
                 {
                     AllureLifecycle.UpdateTestCase(x => x.description += $"\n{method} {type} method failed\n");
                     fr.status = Status.failed;
                     fr.statusDetails.message = testResult.Message;
                     fr.statusDetails.trace = testResult.StackTrace;
-
                     if (type == NUnitHelpMethodType.SetUp) _isSetupFailed = true;
                 }
                 else
                 {
                     fr.status = Status.passed;
+                    if (type == NUnitHelpMethodType.OneTimeTearDown)
+                    {
+                        fr.statusDetails.message = "It's not possible to get status of OneTimeTearDown";
+                        fr.statusDetails.trace = "See Allure.NUnit wiki";
+                        fr.status = Status.none;
+                    }
                 }
 
+                try
+                {
+                    if (testFixture.HasChildren)
+                    {
+                        var properties = _test.Properties;
+                        if (properties.ContainsKey(method))
+                        {
+                            var methodProperty = (SetUpTearDownHelper) properties.Get(method);
+                            fr.start = methodProperty.StartTime;
+                            fr.stop = methodProperty.EndTime;
+                            fr.statusDetails.message = methodProperty.Exception?.Message;
+                            fr.statusDetails.trace = methodProperty.Exception?.StackTrace;
+                            if (!string.IsNullOrEmpty(methodProperty.CustomName)) fr.name = methodProperty.CustomName;
+                        }
+                        else
+                        {
+                            properties = GetTestFixture(_test).Properties;
+                            if (properties.ContainsKey(method))
+                            {
+                                var methodProperty = (SetUpTearDownHelper) properties.Get(method);
+                                fr.start = methodProperty.StartTime;
+                                fr.stop = methodProperty.EndTime;
+                                fr.statusDetails.message = methodProperty.Exception?.Message;
+                                fr.statusDetails.trace = methodProperty.Exception?.StackTrace;
+                                if (!string.IsNullOrEmpty(methodProperty.CustomName))
+                                    fr.name = methodProperty.CustomName;
+                            }
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    //
+                }
+
+
+                fr.stage = Stage.finished;
                 fixtureResultsList.Add(fr);
             }
 
             return fixtureResultsList.ToList();
         }
 
-        public void StopAll(bool isWrapedIntoStep)
+        public void StopAll(bool isWrappedIntoStep)
         {
             var testFixture = GetTestFixture(_test);
 
-            var listSetups = BuildFixtureResults(NUnitHelpMethodType.SetUp, testFixture);
-            var listTeardowns = BuildFixtureResults(NUnitHelpMethodType.TearDown, testFixture);
+            var listSetups = new List<FixtureResult>();
+            listSetups.AddRange(BuildFixtureResults(NUnitHelpMethodType.OneTimeSetup, testFixture));
+            listSetups.AddRange(BuildFixtureResults(NUnitHelpMethodType.SetUp, testFixture));
+
+            var listTearDowns = new List<FixtureResult>();
+            listTearDowns.AddRange(BuildFixtureResults(NUnitHelpMethodType.TearDown, testFixture));
+            listTearDowns.AddRange(BuildFixtureResults(NUnitHelpMethodType.OneTimeTearDown, testFixture));
 
             var result = TestExecutionContext.CurrentContext.CurrentResult;
 
-            if (isWrapedIntoStep)
-            {
+            if (isWrappedIntoStep)
                 AllureLifecycle.StopStep(step =>
                 {
                     step.statusDetails = new StatusDetails
@@ -154,13 +208,8 @@ namespace NUnit.Allure.Core
                         message = result.Message,
                         trace = result.StackTrace
                     };
-                    var param = new Parameter
-                    {
-                        name = "Console Output",
-                        value = result.Output
-                    };
-                    step.parameters.Add(param);
-
+                    AllureLifecycle.AddAttachment("Console Output", "text/plain",
+                        Encoding.ASCII.GetBytes(result.Output), ".txt");
                     if (_isSetupFailed)
                     {
                         step.status = Status.skipped;
@@ -168,14 +217,13 @@ namespace NUnit.Allure.Core
                     }
                     else
                     {
-                        step.status = GetNunitStatus();
+                        step.status = GetNUnitStatus();
                     }
                 });
-            }
 
             StopTestCase();
 
-            StopTestContainer(listSetups, listTeardowns);
+            StopTestContainer(listSetups, listTearDowns);
         }
 
 
@@ -183,7 +231,6 @@ namespace NUnit.Allure.Core
         {
             UpdateTestDataFromAttributes();
             for (var i = 0; i < _test.Arguments.Length; i++)
-            {
                 AllureLifecycle.UpdateTestCase(x => x.parameters.Add(new Parameter
                 {
                     // ReSharper disable once AccessToModifiedClosure
@@ -191,7 +238,6 @@ namespace NUnit.Allure.Core
                     // ReSharper disable once AccessToModifiedClosure
                     value = _test.Arguments[i].ToString()
                 }));
-            }
 
 
             AllureLifecycle.UpdateTestCase(x => x.statusDetails = new StatusDetails
@@ -200,29 +246,29 @@ namespace NUnit.Allure.Core
                 trace = TestContext.CurrentContext.Result.StackTrace
             });
 
-            AllureLifecycle.StopTestCase(testCase => testCase.status = GetNunitStatus());
+            AllureLifecycle.StopTestCase(testCase => testCase.status = GetNUnitStatus());
             AllureLifecycle.WriteTestCase(_testResultGuid);
         }
 
-        private void StopTestContainer(List<FixtureResult> listSetups, List<FixtureResult> listTeardowns)
+        private void StopTestContainer(List<FixtureResult> listSetups, List<FixtureResult> listTearDowns)
         {
             AllureLifecycle.UpdateTestContainer(_containerGuid, cont =>
             {
                 cont.befores.AddRange(listSetups);
-                cont.afters.AddRange(listTeardowns);
+                cont.afters.AddRange(listTearDowns);
             });
             AllureLifecycle.StopTestContainer(_containerGuid);
             AllureLifecycle.WriteTestContainer(_containerGuid);
         }
 
-        public void StartAll(bool isWrapedIntoStep)
+        public void StartAll(bool isWrappedIntoStep)
         {
             StartTestContainer();
             StartTestCase();
-            if (isWrapedIntoStep) StartTestStep();
+            if (isWrappedIntoStep) StartTestStep();
         }
 
-        internal static Status GetNunitStatus()
+        internal static Status GetNUnitStatus()
         {
             var result = TestContext.CurrentContext.Result;
 
@@ -232,15 +278,9 @@ namespace NUnit.Allure.Core
                 var allureSection = jo["allure"];
                 var config = allureSection?.ToObject<AllureExtendedConfiguration>();
                 if (config?.BrokenTestData != null)
-                {
                     foreach (var word in config.BrokenTestData)
-                    {
                         if (result.Message.Contains(word))
-                        {
                             return Status.broken;
-                        }
-                    }
-                }
 
                 switch (result.Outcome.Status)
                 {
@@ -332,15 +372,9 @@ namespace NUnit.Allure.Core
             while (currentTest.GetType() != typeof(TestSuite))
             {
                 if (currentTest.Properties.ContainsKey(name))
-                {
                     if (currentTest.Properties[name].Count > 0)
-                    {
                         for (var i = 0; i < currentTest.Properties[name].Count; i++)
-                        {
                             list.Add(currentTest.Properties[name][i].ToString());
-                        }
-                    }
-                }
 
                 currentTest = currentTest.Parent;
             }
@@ -348,37 +382,10 @@ namespace NUnit.Allure.Core
             return list;
         }
 
+        [Obsolete("Use extension method AllureLifecycle.WrapInStep")]
         public void WrapInStep(Action action, string stepName = "")
         {
             AllureLifecycle.WrapInStep(action, stepName);
-        }
-    }
-
-    public static class AllureExtensions
-    {
-        public static void WrapInStep(this AllureLifecycle lifecycle, Action action, string stepName = "")
-        {
-            var id = Guid.NewGuid().ToString();
-            var stepResult = new StepResult {name = stepName};
-            try
-            {
-                lifecycle.StartStep(id, stepResult);
-                action.Invoke();
-                lifecycle.StopStep(step => stepResult.status = Status.passed);
-            }
-            catch (Exception e)
-            {
-                lifecycle.StopStep(step =>
-                {
-                    step.statusDetails = new StatusDetails
-                    {
-                        message = e.Message,
-                        trace = e.StackTrace
-                    };
-                    step.status = AllureNUnitHelper.GetNunitStatus();
-                });
-                throw;
-            }
         }
     }
 }

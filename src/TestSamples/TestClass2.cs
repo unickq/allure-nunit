@@ -7,13 +7,21 @@ using NUnit.Framework;
 namespace NUnit.Allure.TestSamples
 {
     [TestFixture]
-
-    class TestClass2 : BaseTest
+    internal class TestClass2 : BaseTest
     {
         [SetUp]
         public void SetUp()
         {
             Console.WriteLine("Hello, this is TestClass1 setUp");
+        }
+
+        private int _retryInt;
+
+        [Test]
+        [Pairwise]
+        public void PairWiseTest([Values("a", "b", "c")] string str)
+        {
+            Console.WriteLine(str);
         }
 
         [Test]
@@ -29,19 +37,12 @@ namespace NUnit.Allure.TestSamples
             Assert.Pass(d.ToString(CultureInfo.InvariantCulture));
         }
 
-        private int _retryInt;
 
         [Test]
-        [Retry(5)]
-        [AllureEpic("Retry")]
-        [AllureFeature("RetrySmall")]
-        [AllureSeverity(SeverityLevel.blocker)]
-        [AllureSuite("RetrySuite")]
-        [AllureParentSuite("With parameters")]
-        [AllureOwner("Nick")]
-        public void RetryTest()
+        [Repeat(5)]
+        public void RepeatTest()
         {
-            Assert.That(++_retryInt, Is.GreaterThan(3));
+            Console.WriteLine(DateTime.Now);
         }
 
         [Test(Author = "Nick", Description = "Retry example")]
@@ -57,17 +58,17 @@ namespace NUnit.Allure.TestSamples
             Assert.That(DateTime.Now.Millisecond, Is.LessThan(50));
         }
 
-        [Test, Pairwise]
-        public void PairWiseTest([Values("a", "b", "c")] string str)
+        [Test]
+        [Retry(5)]
+        [AllureEpic("Retry")]
+        [AllureFeature("RetrySmall")]
+        [AllureSeverity(SeverityLevel.blocker)]
+        [AllureSuite("RetrySuite")]
+        [AllureParentSuite("With parameters")]
+        [AllureOwner("Nick")]
+        public void RetryTest()
         {
-            Console.WriteLine(str);
-        }
-
-
-        [Test, Repeat(5)]
-        public void RepeatTest()
-        {
-            Console.WriteLine(DateTime.Now);
+            Assert.That(++_retryInt, Is.GreaterThan(3));
         }
     }
 }

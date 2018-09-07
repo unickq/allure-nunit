@@ -7,12 +7,13 @@ namespace NUnit.Allure.TestSamples
 {
     [AllureNUnit]
     [AllureParentSuite("AllTests")]
-    class BaseTest
+    internal class BaseTest
     {
         [OneTimeSetUp]
-        public void OneTimeSetup()
+        public void CleanupResultDirectory()
         {
-            AllureLifecycle.Instance.CleanupResultDirectory();
+            AllureExtensions.WrapSetUpTearDownParams(() => { AllureLifecycle.Instance.CleanupResultDirectory(); },
+                "Cleanup Allure Results Directory");
         }
     }
 }

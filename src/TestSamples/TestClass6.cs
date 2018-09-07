@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace NUnit.Allure.TestSamples
 {
     [TestFixture]
-    class TestClass6 : BaseTest
+    internal class TestClass6 : BaseTest
     {
         [SetUp]
         public void NormalSetUp()
@@ -27,7 +27,7 @@ namespace NUnit.Allure.TestSamples
         [Test]
         public void TestWontRun()
         {
-            Console.WriteLine("Oh no!");          
+            Console.WriteLine("Oh no!");
         }
     }
 }
