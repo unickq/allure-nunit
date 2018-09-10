@@ -276,11 +276,18 @@ namespace NUnit.Allure.Core
             {
                 var jo = JObject.Parse(AllureLifecycle.JsonConfiguration);
                 var allureSection = jo["allure"];
-                var config = allureSection?.ToObject<AllureExtendedConfiguration>();
-                if (config?.BrokenTestData != null)
-                    foreach (var word in config.BrokenTestData)
-                        if (result.Message.Contains(word))
-                            return Status.broken;
+                try
+                {
+                    var config = allureSection?.ToObject<AllureExtendedConfiguration>();
+                    if (config?.BrokenTestData != null)
+                        foreach (var word in config.BrokenTestData)
+                            if (result.Message.Contains(word))
+                                return Status.broken;
+                }
+                catch (Exception)
+                {
+                    //Ignored
+                }
 
                 switch (result.Outcome.Status)
                 {

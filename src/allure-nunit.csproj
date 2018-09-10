@@ -15,7 +15,7 @@
     <RepositoryUrl>https://github.com/unickq/allure-nunit</RepositoryUrl>
     <PackageLicenseUrl>https://github.com/unickq/allure-nunit/blob/master/LICENSE</PackageLicenseUrl>
     <PackageTags>nunit allure</PackageTags>
-    <PackageReleaseNotes>TestFixture(Category) fix</PackageReleaseNotes>
+    <PackageReleaseNotes>OneTime attributes support</PackageReleaseNotes>
     <PackageIconUrl>https://raw.githubusercontent.com/unickq/allure-nunit/master/logo.png</PackageIconUrl>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
