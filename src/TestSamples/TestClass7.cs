@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using NUnit.Allure.Attributes;
 using NUnit.Allure.Core;
 using NUnit.Framework;
 
@@ -49,6 +50,16 @@ namespace NUnit.Allure.TestSamples
         public void Test2()
         {
             Console.WriteLine("Test2");
+        }
+
+        [Test, Combinatorial]
+        [AllureLink("https://github.com/unickq/allure-nunit/issues/17")]
+        public void TestExample(
+            [Range(1, 3)] int valA,
+            [Values(null, 2)] int? valB
+        )
+        {
+            Assert.AreEqual(valA, valB);
         }
     }
 }

@@ -231,14 +231,15 @@ namespace NUnit.Allure.Core
         {
             UpdateTestDataFromAttributes();
             for (var i = 0; i < _test.Arguments.Length; i++)
+            {
                 AllureLifecycle.UpdateTestCase(x => x.parameters.Add(new Parameter
                 {
                     // ReSharper disable once AccessToModifiedClosure
                     name = $"Param #{i}",
-                    // ReSharper disable once AccessToModifiedClosure
-                    value = _test.Arguments[i].ToString()
+                    // ReSharper disable once AccessToModifiedClosure                   
+                    value = _test.Arguments[i] == null ? "NULL" : _test.Arguments[i].ToString()
                 }));
-
+            }
 
             AllureLifecycle.UpdateTestCase(x => x.statusDetails = new StatusDetails
             {
