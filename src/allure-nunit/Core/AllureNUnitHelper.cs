@@ -269,7 +269,7 @@ namespace NUnit.Allure.Core
             if (isWrappedIntoStep) StartTestStep();
         }
 
-        internal static Status GetNUnitStatus()
+        public static Status GetNUnitStatus()
         {
             var result = TestContext.CurrentContext.Result;
 
