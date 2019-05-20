@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "allure-nunit", "allure-nunit.csproj", "{F45061CE-868E-45DB-963F-84397F4F1653}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "allure-nunit", "allure-nunit\allure-nunit.csproj", "{F45061CE-868E-45DB-963F-84397F4F1653}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BC0E230A-6E28-4F2A-BA10-0EDCF0C9F5AF}"
 	ProjectSection(SolutionItems) = preProject
@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\LICENSE = ..\LICENSE
 		..\README.md = ..\README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "allure-nunit-steps", "allure-nunit-steps\allure-nunit-steps.csproj", "{2A644A1C-16B7-47C5-87DB-0598C964270C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -22,6 +24,10 @@ Global
 		{F45061CE-868E-45DB-963F-84397F4F1653}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F45061CE-868E-45DB-963F-84397F4F1653}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F45061CE-868E-45DB-963F-84397F4F1653}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A644A1C-16B7-47C5-87DB-0598C964270C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A644A1C-16B7-47C5-87DB-0598C964270C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A644A1C-16B7-47C5-87DB-0598C964270C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A644A1C-16B7-47C5-87DB-0598C964270C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

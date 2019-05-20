@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <RootNamespace>NUnit.Allure.Steps</RootNamespace>
+    <AssemblyName>NUnit.Allure.Steps</AssemblyName>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.1.0-alfa1</Version>
+    <Authors>Nick Chursin</Authors>
+    <Description>Steps Attribute for NUnit.Allure</Description>
+    <PackageId>NUnit.Allure.Steps</PackageId>
+    <AssemblyName>NUnit.Allure.Steps</AssemblyName>
+    <RootNamespace>NUnit.Allure.Steps</RootNamespace>
+    <PackageProjectUrl>https://github.com/unickq/allure-nunit</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/unickq/allure-nunit</RepositoryUrl>
+    <!-- <PackageLicenseUrl>https://github.com/unickq/allure-nunit/blob/master/LICENSE</PackageLicenseUrl> -->
+    <PackageTags>nunit allure</PackageTags>
+    <PackageIconUrl>https://raw.githubusercontent.com/unickq/allure-nunit/master/logo.png</PackageIconUrl>
+    <OutputType>Library</OutputType>
+    <ApplicationIcon />
+    <StartupObject />
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspectInjector" Version="2.1.1" />
+    <PackageReference Include="NUnit.Allure" Version="1.0.5" />
+  </ItemGroup>
+
+</Project>
