@@ -61,5 +61,15 @@ namespace NUnit.Allure.TestSamples
         {
             Assert.AreEqual(valA, valB);
         }
+
+        [Test]
+        [AllureIssue("18")]
+        public void LocaleAttachments()
+        {
+            Console.WriteLine("Test attachment");
+            Console.WriteLine("Проверка");
+            Console.WriteLine("チェックする");
+            Console.WriteLine("تفتيش");
+        }
     }
 }

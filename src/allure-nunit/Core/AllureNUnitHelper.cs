@@ -209,7 +209,7 @@ namespace NUnit.Allure.Core
                         trace = result.StackTrace
                     };
                     AllureLifecycle.AddAttachment("Console Output", "text/plain",
-                        Encoding.ASCII.GetBytes(result.Output), ".txt");
+                        Encoding.UTF8.GetBytes(result.Output), ".txt");
                     if (_isSetupFailed)
                     {
                         step.status = Status.skipped;
