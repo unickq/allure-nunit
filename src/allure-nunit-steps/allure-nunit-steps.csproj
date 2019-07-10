@@ -5,7 +5,7 @@
     <RootNamespace>NUnit.Allure.Steps</RootNamespace>
     <AssemblyName>NUnit.Allure.Steps</AssemblyName>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.7</Version>
+    <Version>1.0.7.1</Version>
     <Authors>Nick Chursin</Authors>
     <Description>Steps Attribute for NUnit.Allure</Description>
     <PackageId>NUnit.Allure.Steps</PackageId>

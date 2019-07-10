@@ -1,5 +1,5 @@
 # Allure NUnit adapter
-NUnit3 adapter for Allure Framework 
+NUnit adapter for Allure Framework 
 
 [![Build status](https://ci.appveyor.com/api/projects/status/5nomj0qw25bo8gnv?svg=true)](https://ci.appveyor.com/project/unickq/allure-nunit)[![NuGet](http://flauschig.ch/nubadge.php?id=NUnit.Allure)](https://www.nuget.org/packages/NUnit.Allure)[![Steps](http://flauschig.ch/nubadge.php?id=NUnit.Allure.Steps)](https://www.nuget.org/packages/NUnit.Allure.Steps)
 
@@ -10,37 +10,52 @@ NUnit3 adapter for Allure Framework
 ### Code example:
 
 ```cs
-[TestFixture]
+[TestFixture(Author = "unickq", Description = "Examples")]
 [AllureNUnit]
+[AllureLink("https://github.com/unickq/allure-nunit")]
 public class Tests
 {
+    [OneTimeSetUp]
+    public void ClearResultsDir()
+    {
+        AllureLifecycle.Instance.CleanupResultDirectory();
+    }
+
+    //Allure.Steps required
+    [AllureStep("This method is just saying hello")]
+    private void SayHello()
+    {
+        Console.WriteLine("Hello!");
+    }
+
     [Test]
-    [AllureTest("I'm a test")]
-    [AllureTag("NUnit","Debug")]
+    [AllureTag("NUnit", "Debug")]
     [AllureIssue("GitHub#1", "https://github.com/unickq/allure-nunit")]
-    [AllureSeverity(AllureSeverity.Critical)]
+    [AllureSeverity(SeverityLevel.critical)]
     [AllureFeature("Core")]
     public void EvenTest([Range(0, 5)] int value)
     {
-        Assert.IsTrue(value % 2 == 0, $"Oh no :( {value} % 2 = {value % 2}" );
+        SayHello();
+            
+        //Wrapping Step
+        AllureLifecycle.Instance.WrapInStep(
+            () => { Assert.IsTrue(value % 2 == 0, $"Oh no :( {value} % 2 = {value % 2}"); },
+            "Validate calculations");
     }
 }
 ```  
 
 ### ToDo:
-- [x] NET 4.5, NET Standard 2.0 support
-- [x] Steps Wrapping - with custom method
-- [x] Allure SetUp/TearDown support
+- [x] NET Standard 2.0 (NET 4.5 without steps)
+- [x] Parallelizable test support
 - [x] Attachments
-- [x] Parallelizable(ParallelScope.Fixtures)
-- [x] Parallelizable(ParallelScope.Children)
+- [x] Allure SetUp/TearDown support
+- [x] Console Output as attached file
 - [x] Add ignored (not started) tests to results. Assert.Ignore() works :) [AllureDisplayIgnored]
-
+- [x] [Steps](https://github.com/unickq/allure-nunit/wiki/AllureStep) attribute for non-test methods
 
 ### Installation and Usage
 - Download from Nuget with all dependencies
 - Configure allureConfig.json
-- Set AllureNUnit attribute under test fixture
-- Use other attributes if needed
-
-[![NuGet](http://flauschig.ch/nubadge.php?id=NUnit.Allure)](https://www.nuget.org/packages/NUnit.Allure)
+- Set `[AllureNUnit]` attribute under test fixture
+- Use other [attributes](https://github.com/unickq/allure-nunit/wiki/Attributes) if needed

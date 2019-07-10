@@ -6,7 +6,7 @@ using AspectInjector.Broker;
 namespace NUnit.Allure.Steps
 {
     [Aspect(Scope.Global)]
-    internal class AllureStepAspect
+    public class AllureStepAspect
     {
         [Advice(Kind.Around, Targets = Target.Method)]
         public object WrapStep(
