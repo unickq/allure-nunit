@@ -13,17 +13,22 @@
     <RootNamespace>NUnit.Allure</RootNamespace>
     <PackageProjectUrl>https://github.com/unickq/allure-nunit</PackageProjectUrl>
     <RepositoryUrl>https://github.com/unickq/allure-nunit</RepositoryUrl>
-    <PackageLicenseUrl>https://github.com/unickq/allure-nunit/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <PackageTags>nunit allure</PackageTags>
     <PackageReleaseNotes>Fixed console log attachment encoding</PackageReleaseNotes>
     <PackageIconUrl>https://raw.githubusercontent.com/unickq/allure-nunit/master/logo.png</PackageIconUrl>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="packages\**" />
     <EmbeddedResource Remove="packages\**" />
     <None Remove="packages\**" />
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

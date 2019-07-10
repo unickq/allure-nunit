@@ -1,7 +1,7 @@
-﻿version: 1.0.6
+﻿version: 1.0.7
 
 environment:
-  nugetVersion: 1.0.6
+  nugetVersion: 1.0.7
 
 init:
   - ps: Update-AppveyorBuild -Version $env:nugetVersion
@@ -35,6 +35,6 @@ for:
   branches:
       only:
         - develop
-  version: 1.0.7-beta{build}
+  version: 1.0.8-beta{build}
   environment:
-    nugetVersion: 1.0.7-beta$(APPVEYOR_BUILD_NUMBER)
+    nugetVersion: 1.0.8-beta$(APPVEYOR_BUILD_NUMBER)

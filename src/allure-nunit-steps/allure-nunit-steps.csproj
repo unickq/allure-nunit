@@ -1,11 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>NUnit.Allure.Steps</RootNamespace>
     <AssemblyName>NUnit.Allure.Steps</AssemblyName>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>0.1.0-alfa1</Version>
+    <Version>1.0.7</Version>
     <Authors>Nick Chursin</Authors>
     <Description>Steps Attribute for NUnit.Allure</Description>
     <PackageId>NUnit.Allure.Steps</PackageId>
@@ -13,17 +13,23 @@
     <RootNamespace>NUnit.Allure.Steps</RootNamespace>
     <PackageProjectUrl>https://github.com/unickq/allure-nunit</PackageProjectUrl>
     <RepositoryUrl>https://github.com/unickq/allure-nunit</RepositoryUrl>
-    <!-- <PackageLicenseUrl>https://github.com/unickq/allure-nunit/blob/master/LICENSE</PackageLicenseUrl> -->
     <PackageTags>nunit allure</PackageTags>
     <PackageIconUrl>https://raw.githubusercontent.com/unickq/allure-nunit/master/logo.png</PackageIconUrl>
     <OutputType>Library</OutputType>
-    <ApplicationIcon />
-    <StartupObject />
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageReleaseNotes>Ability to change step name</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AspectInjector" Version="2.1.1" />
-    <PackageReference Include="NUnit.Allure" Version="1.0.5" />
+    <PackageReference Include="AspectInjector" Version="2.2.1" />
+    <PackageReference Include="NUnit.Allure" Version="1.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
