@@ -12,7 +12,7 @@ using NUnit.Framework;
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
 [assembly: Guid("f45061ce-868e-45db-963f-84397f4f1653")]
-[assembly: AssemblyVersion("1.0.6.0")]
-[assembly: AssemblyFileVersion("1.0.6.0")]
+[assembly: AssemblyVersion("1.0.6.2")]
+[assembly: AssemblyFileVersion("1.0.6.2")]
 
 [assembly: Parallelizable(ParallelScope.Children)]

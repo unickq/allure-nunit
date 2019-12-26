@@ -2,9 +2,9 @@
 
   <PropertyGroup>
     <TargetFrameworks>net45;netstandard20</TargetFrameworks>
-    <AssemblyVersion>1.0.3</AssemblyVersion>
-    <FileVersion>1.0.3</FileVersion>
-    <Version>1.0.3</Version>
+    <AssemblyVersion>1.0.6.2</AssemblyVersion>
+    <FileVersion>1.0.6.2</FileVersion>
+    <Version>1.0.6.2</Version>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>Nick Chursin</Authors>
     <Description>NUnit attributes extenstions for Allure</Description>
@@ -15,9 +15,8 @@
     <RepositoryUrl>https://github.com/unickq/allure-nunit</RepositoryUrl>
     <PackageLicenseUrl></PackageLicenseUrl>
     <PackageTags>nunit allure</PackageTags>
-    <PackageReleaseNotes>Fixed console log attachment encoding</PackageReleaseNotes>
-    <PackageIconUrl>https://raw.githubusercontent.com/unickq/allure-nunit/master/logo.png</PackageIconUrl>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <PackageReleaseNotes>Fixed https://github.com/unickq/allure-nunit/issues/19</PackageReleaseNotes>
+	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
@@ -25,6 +24,7 @@
     <Compile Remove="packages\**" />
     <EmbeddedResource Remove="packages\**" />
     <None Remove="packages\**" />
+    <None Include="..\..\logo.png" Pack="true" Visible="false" PackagePath="" />
     <None Include="..\..\LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>

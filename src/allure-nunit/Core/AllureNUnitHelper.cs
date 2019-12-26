@@ -199,31 +199,39 @@ namespace NUnit.Allure.Core
             listTearDowns.AddRange(BuildFixtureResults(NUnitHelpMethodType.OneTimeTearDown, testFixture));
 
             var result = TestExecutionContext.CurrentContext.CurrentResult;
-
-            if (isWrappedIntoStep)
-                AllureLifecycle.StopStep(step =>
-                {
-                    step.statusDetails = new StatusDetails
+            try
+            {
+                if (isWrappedIntoStep)
+                    AllureLifecycle.StopStep(step =>
                     {
-                        message = result.Message,
-                        trace = result.StackTrace
-                    };
-                    AllureLifecycle.AddAttachment("Console Output", "text/plain",
-                        Encoding.UTF8.GetBytes(result.Output), ".txt");
-                    if (_isSetupFailed)
-                    {
-                        step.status = Status.skipped;
-                        step.name += $" skipped because of {listSetups.Select(sm => sm.name).FirstOrDefault()} failure";
-                    }
-                    else
-                    {
-                        step.status = GetNUnitStatus();
-                    }
-                });
+                        step.statusDetails = new StatusDetails
+                        {
+                            message = result.Message,
+                            trace = result.StackTrace
+                        };
+                        AllureLifecycle.AddAttachment("Console Output", "text/plain",
+                            Encoding.UTF8.GetBytes(result.Output), ".txt");
+                        if (_isSetupFailed)
+                        {
+                            step.status = Status.skipped;
+                            step.name +=
+                                $" skipped because of {listSetups.Select(sm => sm.name).FirstOrDefault()} failure";
+                        }
+                        else
+                        {
+                            step.status = GetNUnitStatus();
+                        }
+                    });
 
-            StopTestCase();
+                StopTestCase();
 
-            StopTestContainer(listSetups, listTearDowns);
+                StopTestContainer(listSetups, listTearDowns);
+            }
+            catch (ArgumentNullException e)
+            {
+                Console.WriteLine(e.Message);
+                // Ignore already killed Allure dictionary 
+            }
         }
 
 
@@ -377,7 +385,7 @@ namespace NUnit.Allure.Core
         {
             var list = new List<string>();
             var currentTest = _test;
-            while (currentTest.GetType() != typeof(TestSuite))
+            while (currentTest.GetType() != typeof(TestSuite) && currentTest.GetType() != typeof(TestAssembly))
             {
                 if (currentTest.Properties.ContainsKey(name))
                     if (currentTest.Properties[name].Count > 0)
