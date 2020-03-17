@@ -17,8 +17,8 @@ namespace NUnit.Allure.Steps
         {
             var stepName = methodBase.GetCustomAttribute<AllureStepAttribute>().StepName;
             var stepResult = string.IsNullOrEmpty(stepName)
-                ? new StepResult {name = name}
-                : new StepResult {name = stepName};
+                ? new StepResult {name = name, parameters = ParameterHelper.CreateParameters(arguments)}
+                : new StepResult {name = stepName, parameters = ParameterHelper.CreateParameters(arguments)};
 
             object result;
             try
