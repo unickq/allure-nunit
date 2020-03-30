@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Allure.Commons;
 
 namespace NUnit.Allure.Steps
@@ -16,34 +15,18 @@ namespace NUnit.Allure.Steps
 
         public static Parameter CreateParameters(object argument)
         {
-            if (argument == null)
+            switch (argument)
             {
-                return CreateParameters(Unknown, Null);
+                case null:
+                    return new Parameter {name = Unknown, value = Null};
+                case ICollection collection:
+                    return new Parameter
+                    {
+                        name = argument.GetType().Name,
+                        value = string.Join(", ", collection.Cast<object>().ToList())
+                    };
+                default: return new Parameter {name = argument.GetType().Name, value = argument.ToString()};
             }
-
-            string value;
-            if (argument is ICollection collection)
-            {
-                var sb = new StringBuilder();
-                foreach (var item in collection)
-                {
-                    sb.Append(item + ", ");
-                }
-                value = sb.ToString();
-            }
-            else
-            {
-                value = argument.ToString();
-            }
-
-            return CreateParameters(argument.GetType().Name, value ?? Null);
         }
-
-        private static Parameter CreateParameters(string name, string value)
-            => new Parameter
-            {
-                name = name,
-                value = value
-            };
     }
 }
