@@ -16,6 +16,12 @@ namespace NUnit.Allure.Steps
             [Argument(Source.Target)] Func<object[], object> method)
         {
             var stepName = methodBase.GetCustomAttribute<AllureStepAttribute>().StepName;
+
+            for (var i = 0; i < arguments.Length; i++)
+            {
+                stepName = stepName?.Replace("{" + i + "}", arguments[i].ToString());
+            }
+
             var stepResult = string.IsNullOrEmpty(stepName)
                 ? new StepResult {name = name, parameters = ParameterHelper.CreateParameters(arguments)}
                 : new StepResult {name = stepName, parameters = ParameterHelper.CreateParameters(arguments)};

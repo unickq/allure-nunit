@@ -1,21 +1,19 @@
-﻿version: 1.0.6.2
-
-environment:
-  nugetVersion: 1.0.6.2
+﻿version: 0.0.{build}
 
 init:
-  - ps: Update-AppveyorBuild -Version $env:nugetVersion
+  - ps: if (Test-Path env:APPVEYOR_REPO_TAG) { $env:version = $env:APPVEYOR_REPO_TAG_NAME }
+  - ps: Update-AppveyorBuild -Version $env:version
 
 dotnet_csproj:
   patch: true
   file: '**\*.csproj'
   version: '{version}'
-  package_version: $(nugetVersion)
+  package_version: $(version)
   assembly_version: '{version}'
   file_version: '{version}'
   informational_version: '{version}'
 
-image: Visual Studio 2017
+image: Visual Studio 2019
 configuration: Release
 platform: Any CPU
 
@@ -29,12 +27,3 @@ test: off
 
 artifacts:
 - path: '**\NUnit.Allure*.nupkg'
-
-for:
--
-  branches:
-      only:
-        - develop
-  version: 1.0.7-beta{build}
-  environment:
-    nugetVersion: 1.0.7-beta$(APPVEYOR_BUILD_NUMBER)

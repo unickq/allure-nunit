@@ -5,7 +5,7 @@
     <RootNamespace>NUnit.Allure.Steps</RootNamespace>
     <AssemblyName>NUnit.Allure.Steps</AssemblyName>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.7.1</Version>
+    <Version>1.0.0</Version>
     <Authors>Nick Chursin</Authors>
     <Description>Steps Attribute for NUnit.Allure</Description>
     <PackageId>NUnit.Allure.Steps</PackageId>
@@ -14,19 +14,19 @@
     <PackageProjectUrl>https://github.com/unickq/allure-nunit</PackageProjectUrl>
     <RepositoryUrl>https://github.com/unickq/allure-nunit</RepositoryUrl>
     <PackageTags>nunit allure</PackageTags>
+    <PackageIconUrl>https://raw.githubusercontent.com/unickq/allure-nunit/master/logo.png</PackageIconUrl>
 	  <OutputType>Library</OutputType>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageReleaseNotes>Ability to change step name</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AspectInjector" Version="2.2.1" />
+    <PackageReference Include="AspectInjector" Version="2.3.1" />
     <PackageReference Include="NUnit.Allure" Version="1.0.6" />
   </ItemGroup>
 
   <ItemGroup>
-	  <None Include="..\..\logo.png" Pack="true" Visible="false" PackagePath="" />
-	  <None Include="..\..\LICENSE">
+    <None Include="..\..\LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
