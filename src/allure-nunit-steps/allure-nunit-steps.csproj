@@ -14,19 +14,24 @@
     <PackageProjectUrl>https://github.com/unickq/allure-nunit</PackageProjectUrl>
     <RepositoryUrl>https://github.com/unickq/allure-nunit</RepositoryUrl>
     <PackageTags>nunit allure</PackageTags>
-    <PackageIconUrl>https://raw.githubusercontent.com/unickq/allure-nunit/master/logo.png</PackageIconUrl>
+    <PackageIconUrl></PackageIconUrl>
 	  <OutputType>Library</OutputType>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <PackageReleaseNotes>Ability to change step name</PackageReleaseNotes>
+    <PackageIcon>logo.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AspectInjector" Version="2.3.1" />
-    <PackageReference Include="NUnit.Allure" Version="1.0.6" />
+    <PackageReference Include="AspectInjector" Version="2.4.1" />
+    <PackageReference Include="NUnit.Allure" Version="1.0.10" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\LICENSE">
+    <None Include="..\..\LICENSE.md">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+    <None Include="..\..\logo.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
