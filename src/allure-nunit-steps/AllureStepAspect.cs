@@ -23,8 +23,8 @@ namespace NUnit.Allure.Steps
             }
 
             var stepResult = string.IsNullOrEmpty(stepName)
-                ? new StepResult {name = name}
-                : new StepResult {name = stepName};
+                ? new StepResult {name = name, parameters = ParameterHelper.CreateParameters(arguments)}
+                : new StepResult {name = stepName, parameters = ParameterHelper.CreateParameters(arguments)};
 
             object result;
             try
