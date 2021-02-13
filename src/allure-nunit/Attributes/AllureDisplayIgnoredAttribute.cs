@@ -37,7 +37,7 @@ namespace NUnit.Allure.Attributes
             if (suite.HasChildren)
             {
                 var ignoredTests =
-                    suite.Tests.Where(t => t.RunState == RunState.Ignored || t.RunState == RunState.Skipped);
+                    GetAllTests(suite).Where(t => t.RunState == RunState.Ignored || t.RunState == RunState.Skipped);
                 foreach (var test in ignoredTests)
                 {
                     AllureLifecycle.Instance.UpdateTestContainer(_ignoredContainerId, t => t.children.Add(test.Id));
@@ -70,6 +70,9 @@ namespace NUnit.Allure.Attributes
                 AllureLifecycle.Instance.WriteTestContainer(_ignoredContainerId);
             }
         }
+
+        private static IEnumerable<ITest> GetAllTests(ITest test) =>
+            test.Tests.Concat(test.Tests.SelectMany(GetAllTests));
 
         public ActionTargets Targets => ActionTargets.Suite;
     }
