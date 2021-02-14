@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Threading.Tasks;
 using Allure.Commons;
 using NUnit.Allure.Attributes;
@@ -46,6 +47,21 @@ namespace NUnit.Allure.TestSamples
         {
         }
 
+        [Test]
+        [TestCase("a")]
+        [TestCase("b", Ignore = "Case")]
+        public void TestCaseIgnoreOne(string a)
+        {
+            Console.WriteLine(a);
+        }
+
+        [Test]
+        [TestCaseSource(typeof(TestClass1), nameof(Data))]
+        public void TestCaseData(string a)
+        {
+            Console.WriteLine(a);
+        }
+
         [Test(Author = "unickq")]
         [Category("SampleTag")]
         [Description("OLOLO")]
@@ -56,6 +72,15 @@ namespace NUnit.Allure.TestSamples
         {
             Console.WriteLine("Failed");
             Assert.DoesNotThrow(() => { throw new Exception("I'm an exception"); });
+        }
+
+        private static IEnumerable Data
+        {
+            get
+            {
+                yield return new TestCaseData("Test").SetName("{m}_NotExist");
+                yield return new TestCaseData("Ignore").SetName("{m}_NotExist").Ignore("Test");
+            }
         }
     }
 }
