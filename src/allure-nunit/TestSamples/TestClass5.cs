@@ -22,6 +22,7 @@ namespace NUnit.Allure.TestSamples
         [Test]
         [Category("Action")]
         [AllureEpic("Steps")]
+        [AllureLabel("name", "value")]
         [AllureSuite("Action")]
         [AllureSubSuite("Adele Song")]
         public void TestWithStepsAction()
@@ -38,6 +39,7 @@ namespace NUnit.Allure.TestSamples
         [Test]
         [Category("Func")]
         [AllureEpic("Steps")]
+        [AllureStory("Story")]
         [AllureSuite("Func")]
         [AllureSubSuite("Adele Song")]
         public void TestWithStepsFunc()

@@ -9,6 +9,7 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
 using TestResult = Allure.Commons.TestResult;
+// ReSharper disable AccessToModifiedClosure
 
 namespace NUnit.Allure.Core
 {
@@ -370,6 +371,9 @@ namespace NUnit.Allure.Core
                         break;
                     case AllureOwnerAttribute ownerAttr:
                         AllureLifecycle.UpdateTestCase(x => x.labels.Add(Label.Owner(ownerAttr.Owner)));
+                        break;
+                    case AllureLabelAttribute labelAttr:
+                        AllureLifecycle.UpdateTestCase(x => x.labels.Add(new Label{name =  labelAttr.Name, value = labelAttr.Value}));
                         break;
                     case AllureEpicAttribute epicAttr:
                         AllureLifecycle.UpdateTestCase(x => x.labels.Add(Label.Epic(epicAttr.Epic)));
