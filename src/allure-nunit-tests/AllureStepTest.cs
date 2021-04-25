@@ -4,7 +4,7 @@ using NUnit.Allure.Attributes;
 using NUnit.Allure.Core;
 using NUnit.Framework;
 
-namespace allure_nunit_tests.aaa.aaa
+namespace allure_nunit_tests
 {
     public static class StepsExamples
     {
