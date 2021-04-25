@@ -9,6 +9,7 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
 using TestResult = Allure.Commons.TestResult;
+
 // ReSharper disable AccessToModifiedClosure
 
 namespace NUnit.Allure.Core
@@ -54,6 +55,9 @@ namespace NUnit.Allure.Core
         private void StartTestCase()
         {
             _testResultGuid = string.Concat(Guid.NewGuid().ToString(), "-tr-", _test.Id);
+
+            Console.WriteLine();   
+           
             var testResult = new TestResult
             {
                 uuid = _testResultGuid,
@@ -64,9 +68,9 @@ namespace NUnit.Allure.Core
                 {
                     Label.Thread(),
                     Label.Host(),
-                    Label.TestClass(_test.ClassName),
+                    Label.Package(_test.ClassName?.Substring(0, _test.ClassName.LastIndexOf('.'))),
                     Label.TestMethod(_test.MethodName),
-                    Label.Package(_test.ClassName)
+                    Label.TestClass(_test.ClassName?.Substring(_test.ClassName.LastIndexOf('.') + 1))
                 }
             };
             AllureLifecycle.StartTestCase(_containerGuid, testResult);
@@ -337,6 +341,20 @@ namespace NUnit.Allure.Core
             foreach (var attribute in attributes)
                 switch (attribute)
                 {
+                    case AllureNameAttribute attr:
+                        AllureLifecycle.UpdateTestCase(x => x.name = attr.TestName);
+                        break;
+                    case AllureDescriptionAttribute attr:
+                        if (attr.IsHtml)
+                        {
+                            AllureLifecycle.UpdateTestCase(x => x.descriptionHtml += attr.TestDescription);
+                        }
+                        else
+                        {
+                            AllureLifecycle.UpdateTestCase(x => x.description += attr.TestDescription);
+                        }
+
+                        break;
                     case AllureFeatureAttribute featureAttr:
                         foreach (var feature in featureAttr.Features)
                             AllureLifecycle.UpdateTestCase(x => x.labels.Add(Label.Feature(feature)));
@@ -373,7 +391,8 @@ namespace NUnit.Allure.Core
                         AllureLifecycle.UpdateTestCase(x => x.labels.Add(Label.Owner(ownerAttr.Owner)));
                         break;
                     case AllureLabelAttribute labelAttr:
-                        AllureLifecycle.UpdateTestCase(x => x.labels.Add(new Label{name =  labelAttr.Name, value = labelAttr.Value}));
+                        AllureLifecycle.UpdateTestCase(x =>
+                            x.labels.Add(new Label {name = labelAttr.Name, value = labelAttr.Value}));
                         break;
                     case AllureEpicAttribute epicAttr:
                         AllureLifecycle.UpdateTestCase(x => x.labels.Add(Label.Epic(epicAttr.Epic)));

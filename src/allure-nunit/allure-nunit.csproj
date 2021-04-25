@@ -14,14 +14,15 @@
     <PackageProjectUrl>https://github.com/unickq/allure-nunit</PackageProjectUrl>
     <RepositoryUrl>https://github.com/unickq/allure-nunit</RepositoryUrl>
     <PackageTags>nunit allure</PackageTags>
-    <PackageReleaseNotes></PackageReleaseNotes>
+    <PackageReleaseNotes>Merged with NUnit.Allure.Steps; Removed tests from pckg</PackageReleaseNotes>
 	  <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <PackageIcon>logo.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Allure.Commons" Version="3.5.0.4" />
+    <PackageReference Include="Allure.Commons" Version="3.5.0.34" />
+    <PackageReference Include="AspectInjector" Version="2.5.0" />
     <PackageReference Include="NUnit" Version="3.13.1" />
   </ItemGroup>
 
