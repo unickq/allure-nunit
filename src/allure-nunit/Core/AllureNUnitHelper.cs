@@ -55,9 +55,6 @@ namespace NUnit.Allure.Core
         private void StartTestCase()
         {
             _testResultGuid = string.Concat(Guid.NewGuid().ToString(), "-tr-", _test.Id);
-
-            Console.WriteLine();   
-           
             var testResult = new TestResult
             {
                 uuid = _testResultGuid,

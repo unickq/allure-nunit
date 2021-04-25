@@ -2,9 +2,9 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
-    <AssemblyVersion>1.0.0</AssemblyVersion>
-    <FileVersion>1.0.0</FileVersion>
-    <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.14-beta2</AssemblyVersion>
+    <FileVersion>1.0.14-beta2</FileVersion>
+    <Version>1.0.14-beta2</Version>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>Nick Chursin</Authors>
     <Description>NUnit attributes extenstions for Allure</Description>
