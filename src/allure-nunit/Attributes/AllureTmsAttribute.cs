@@ -1,11 +1,10 @@
 ﻿using System;
 using Allure.Commons;
-using NUnit.Framework;
 
 namespace NUnit.Allure.Attributes
 {
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = true)]
-    public class AllureTmsAttribute : NUnitAttribute
+    public class AllureTmsAttribute : AllureTestCaseAttribute
     {
         public AllureTmsAttribute(string name, string url)
         {
@@ -18,5 +17,10 @@ namespace NUnit.Allure.Attributes
         }
 
         internal Link TmsLink { get; }
+
+        public override void UpdateTestResult(TestResult testResult)
+        {
+            testResult.links.Add(TmsLink);
+        }
     }
 }

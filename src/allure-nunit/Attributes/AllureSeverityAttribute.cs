@@ -1,11 +1,10 @@
 ﻿using System;
 using Allure.Commons;
-using NUnit.Framework;
 
 namespace NUnit.Allure.Attributes
 {
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class)]
-    public class AllureSeverityAttribute : NUnitAttribute
+    public class AllureSeverityAttribute : AllureTestCaseAttribute
     {
         public AllureSeverityAttribute(SeverityLevel severity = SeverityLevel.normal)
         {
@@ -13,5 +12,10 @@ namespace NUnit.Allure.Attributes
         }
 
         internal SeverityLevel Severity { get; }
+
+        public override void UpdateTestResult(TestResult testCaseResult)
+        {
+            testCaseResult.labels.Add(Label.Severity(Severity));
+        }
     }
 }
