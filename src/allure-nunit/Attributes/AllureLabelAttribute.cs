@@ -1,10 +1,10 @@
 ﻿using System;
-using NUnit.Framework;
+using Allure.Commons;
 
 namespace NUnit.Allure.Attributes
 {
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = true)]
-    public class AllureLabelAttribute : NUnitAttribute
+    public class AllureLabelAttribute : AllureTestCaseAttribute
     {
         public AllureLabelAttribute(string name, string value)
         {
@@ -14,5 +14,10 @@ namespace NUnit.Allure.Attributes
 
         internal string Name { get; }
         internal string Value { get; }
+
+        public override void UpdateTestResult(TestResult testResult)
+        {
+            testResult.labels.Add(new Label { name = Name, value = Value });
+        }
     }
 }

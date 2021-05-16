@@ -1,10 +1,10 @@
 ﻿using System;
-using NUnit.Framework;
+using Allure.Commons;
 
 namespace NUnit.Allure.Attributes
 {
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = true)]
-    public class AllureFeatureAttribute : NUnitAttribute
+    public class AllureFeatureAttribute : AllureTestCaseAttribute
     {
         public AllureFeatureAttribute(params string[] feature)
         {
@@ -12,5 +12,11 @@ namespace NUnit.Allure.Attributes
         }
 
         internal string[] Features { get; }
+
+        public override void UpdateTestResult(TestResult testResult)
+        {
+            foreach (var feature in Features)
+                testResult.labels.Add(Label.Feature(feature));
+        }
     }
 }

@@ -331,58 +331,13 @@ namespace NUnit.Allure.Core
             foreach (var p in GetTestProperties(PropertyNames.Category))
                 AllureLifecycle.UpdateTestCase(x => x.labels.Add(Label.Tag(p)));
 
-            var attributes = _test.Method.GetCustomAttributes<NUnitAttribute>(true).ToList();
-            attributes.AddRange(GetTestFixture(_test).GetCustomAttributes<NUnitAttribute>(true).ToList());
+            var attributes = _test.Method.GetCustomAttributes<AllureTestCaseAttribute>(true).ToList();
+            attributes.AddRange(GetTestFixture(_test).GetCustomAttributes<AllureTestCaseAttribute>(true).ToList());
 
-            foreach (var attribute in attributes)
-                switch (attribute)
-                {
-                    case AllureFeatureAttribute featureAttr:
-                        foreach (var feature in featureAttr.Features)
-                            AllureLifecycle.UpdateTestCase(x => x.labels.Add(Label.Feature(feature)));
-                        break;
-                    case AllureIssueAttribute issueAttr:
-                        AllureLifecycle.UpdateTestCase(x => x.links.Add(issueAttr.IssueLink));
-                        break;
-                    case AllureSeverityAttribute severityAttr:
-                        AllureLifecycle.UpdateTestCase(
-                            x => x.labels.Add(Label.Severity(severityAttr.Severity)));
-                        break;
-                    case AllureStoryAttribute storyAttr:
-                        foreach (var story in storyAttr.Stories)
-                            AllureLifecycle.UpdateTestCase(x => x.labels.Add(Label.Story(story)));
-                        break;
-                    case AllureTagAttribute tagAttr:
-                        foreach (var tag in tagAttr.Tags)
-                            AllureLifecycle.UpdateTestCase(x => x.labels.Add(Label.Tag(tag)));
-                        break;
-                    case AllureTmsAttribute tmsAttr:
-                        AllureLifecycle.UpdateTestCase(x => x.links.Add(tmsAttr.TmsLink));
-                        break;
-                    case AllureLinkAttribute linkAttr:
-                        AllureLifecycle.UpdateTestCase(x => x.links.Add(linkAttr.Link));
-                        break;
-                    case AllureSuiteAttribute suiteAttr:
-                        AllureLifecycle.UpdateTestCase(x => x.labels.Add(Label.Suite(suiteAttr.Suite)));
-                        break;
-                    case AllureSubSuiteAttribute subSuiteAttr:
-                        AllureLifecycle.UpdateTestCase(
-                            x => x.labels.Add(Label.SubSuite(subSuiteAttr.SubSuite)));
-                        break;
-                    case AllureOwnerAttribute ownerAttr:
-                        AllureLifecycle.UpdateTestCase(x => x.labels.Add(Label.Owner(ownerAttr.Owner)));
-                        break;
-                    case AllureLabelAttribute labelAttr:
-                        AllureLifecycle.UpdateTestCase(x => x.labels.Add(new Label{name =  labelAttr.Name, value = labelAttr.Value}));
-                        break;
-                    case AllureEpicAttribute epicAttr:
-                        AllureLifecycle.UpdateTestCase(x => x.labels.Add(Label.Epic(epicAttr.Epic)));
-                        break;
-                    case AllureParentSuiteAttribute parentSuiteAttr:
-                        AllureLifecycle.UpdateTestCase(x =>
-                            x.labels.Add(Label.ParentSuite(parentSuiteAttr.ParentSuite)));
-                        break;
-                }
+            attributes.ForEach(a =>
+            {
+                AllureLifecycle.UpdateTestCase(a.UpdateTestResult);
+            });
         }
 
         private IEnumerable<string> GetTestProperties(string name)

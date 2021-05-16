@@ -1,10 +1,10 @@
 ﻿using System;
-using NUnit.Framework;
+using Allure.Commons;
 
 namespace NUnit.Allure.Attributes
 {
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = true)]
-    public class AllureEpicAttribute : NUnitAttribute
+    public class AllureEpicAttribute : AllureTestCaseAttribute
     {
         public AllureEpicAttribute(string epic)
         {
@@ -12,5 +12,10 @@ namespace NUnit.Allure.Attributes
         }
 
         public string Epic { get; }
+
+        public override void UpdateTestResult(TestResult testResult)
+        {
+            testResult.labels.Add(Label.Epic(Epic));
+        }
     }
 }
