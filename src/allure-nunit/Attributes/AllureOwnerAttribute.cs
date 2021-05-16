@@ -11,7 +11,7 @@ namespace NUnit.Allure.Attributes
             Owner = owner;
         }
 
-        internal string Owner { get; }
+        private string Owner { get; }
 
         public override void UpdateTestResult(TestResult testResult)
         {

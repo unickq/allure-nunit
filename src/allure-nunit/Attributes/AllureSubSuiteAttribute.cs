@@ -11,7 +11,7 @@ namespace NUnit.Allure.Attributes
             SubSuite = subSuite;
         }
 
-        internal string SubSuite { get; }
+        private string SubSuite { get; }
 
         public override void UpdateTestResult(TestResult testResult)
         {

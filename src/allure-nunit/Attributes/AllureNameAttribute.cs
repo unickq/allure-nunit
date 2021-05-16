@@ -1,16 +1,21 @@
 ﻿using System;
-using NUnit.Framework;
+using Allure.Commons;
 
 namespace NUnit.Allure.Attributes
 {
     [AttributeUsage(AttributeTargets.Method)]
-    public class AllureNameAttribute : NUnitAttribute
+    public class AllureNameAttribute : AllureTestCaseAttribute
     {
         public AllureNameAttribute(string name)
         {
             TestName = name;
         }
 
-        internal string TestName { get; }
+        private string TestName { get; }
+
+        public override void UpdateTestResult(TestResult testResult)
+        {
+            testResult.name = TestName;
+        }
     }
 }

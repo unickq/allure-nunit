@@ -1,10 +1,10 @@
 ﻿using System;
-using NUnit.Framework;
+using Allure.Commons;
 
 namespace NUnit.Allure.Attributes
 {
     [AttributeUsage(AttributeTargets.Method)]
-    public class AllureDescriptionAttribute : NUnitAttribute
+    public class AllureDescriptionAttribute : AllureTestCaseAttribute
     {
         public AllureDescriptionAttribute(string description, bool html = false)
         {
@@ -12,7 +12,19 @@ namespace NUnit.Allure.Attributes
             IsHtml = html;
         }
 
-        internal string TestDescription { get; }
-        internal bool IsHtml { get; }
+        private string TestDescription { get; }
+        private bool IsHtml { get; }
+
+        public override void UpdateTestResult(TestResult testResult)
+        {
+            if (IsHtml)
+            {
+                testResult.descriptionHtml += TestDescription;
+            }
+            else
+            {
+                testResult.description += TestDescription;
+            }
+        }
     }
 }

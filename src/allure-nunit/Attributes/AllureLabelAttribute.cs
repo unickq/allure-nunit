@@ -12,12 +12,12 @@ namespace NUnit.Allure.Attributes
             Value = value;
         }
 
-        internal string Name { get; }
-        internal string Value { get; }
+        private string Name { get; }
+        private string Value { get; }
 
         public override void UpdateTestResult(TestResult testResult)
         {
-            testResult.labels.Add(new Label { name = Name, value = Value });
+            testResult.labels.Add(new Label {name = Name, value = Value});
         }
     }
 }

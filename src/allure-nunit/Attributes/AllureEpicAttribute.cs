@@ -11,7 +11,7 @@ namespace NUnit.Allure.Attributes
             Epic = epic;
         }
 
-        public string Epic { get; }
+        private string Epic { get; }
 
         public override void UpdateTestResult(TestResult testResult)
         {
