@@ -1,10 +1,10 @@
 ﻿using System;
-using NUnit.Framework;
+using Allure.Commons;
 
 namespace NUnit.Allure.Attributes
 {
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = true)]
-    public class AllureOwnerAttribute : NUnitAttribute
+    public class AllureOwnerAttribute : AllureTestCaseAttribute
     {
         public AllureOwnerAttribute(string owner)
         {
@@ -12,5 +12,10 @@ namespace NUnit.Allure.Attributes
         }
 
         internal string Owner { get; }
+
+        public override void UpdateTestResult(TestResult testResult)
+        {
+            testResult.labels.Add(Label.Owner(Owner));
+        }
     }
 }

@@ -1,11 +1,10 @@
 ﻿using System;
 using Allure.Commons;
-using NUnit.Framework;
 
 namespace NUnit.Allure.Attributes
 {
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = true)]
-    public class AllureIssueAttribute : NUnitAttribute
+    public class AllureIssueAttribute : AllureTestCaseAttribute
     {
         public AllureIssueAttribute(string name, string url)
         {
@@ -18,5 +17,10 @@ namespace NUnit.Allure.Attributes
         }
 
         internal Link IssueLink { get; }
+
+        public override void UpdateTestResult(TestResult testCaseResult)
+        {
+            testCaseResult.links.Add(IssueLink);
+        }
     }
 }

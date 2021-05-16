@@ -1,10 +1,10 @@
 ﻿using System;
-using NUnit.Framework;
+using Allure.Commons;
 
 namespace NUnit.Allure.Attributes
 {
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = true)]
-    public class AllureSuiteAttribute : NUnitAttribute
+    public class AllureSuiteAttribute : AllureTestCaseAttribute
     {
         public AllureSuiteAttribute(string suite)
         {
@@ -12,5 +12,10 @@ namespace NUnit.Allure.Attributes
         }
 
         internal string Suite { get; }
+
+        public override void UpdateTestResult(TestResult testResult)
+        {
+            testResult.labels.Add(Label.Suite(Suite));
+        }
     }
 }
