@@ -8,5 +8,6 @@ namespace allure_nunit_tests
     [AllureEpic("Root Epic")]
     public class BaseTest
     {
+        // Used to inherit attributes
     }
 }
