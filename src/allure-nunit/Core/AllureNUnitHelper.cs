@@ -65,9 +65,9 @@ namespace NUnit.Allure.Core
                 {
                     Label.Thread(),
                     Label.Host(),
-                    Label.Package(_test.ClassName?.Substring(0, _test.ClassName.LastIndexOf('.'))),
+                    Label.Package(_test.FullName),
                     Label.TestMethod(_test.MethodName),
-                    Label.TestClass(_test.ClassName?.Substring(_test.ClassName.LastIndexOf('.') + 1))
+                    Label.TestClass(_test.ClassName)
                 }
             };
             AllureLifecycle.StartTestCase(_containerGuid, testResult);

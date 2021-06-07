@@ -1,0 +1,10 @@
+{
+  "name": "UI Build Results",
+  "type": "jenkins",
+  "url": "http://example.org",
+  "buildOrder": 13,
+  "buildName": "Link to view latest build in UI Pipeline",
+  "buildUrl": "https://dev.azure.com/thewinequarter/EDG%20Automation/_build?definitionId=550",
+  "reportUrl": "http://example.org/build#13/AllureReport",
+  "reportName": "Demo allure report"
+}

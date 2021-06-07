@@ -56,7 +56,7 @@ namespace NUnit.Allure.Attributes
                             Label.SubSuite(reason),
                             Label.Thread(),
                             Label.Host(),
-                            Label.TestClass(test.ClassName),
+                            Label.TestClass(test.FullName),
                             Label.TestMethod(test.MethodName),
                             Label.Package(test.ClassName)
                         }

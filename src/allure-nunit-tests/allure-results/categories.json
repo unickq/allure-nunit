@@ -1,0 +1,24 @@
+[
+  {
+    "name": "Ignored tests",
+    "matchedStatuses": [ "skipped" ]
+  },
+  {
+    "name": "Passed tests",
+    "matchedStatuses": [ "passed" ]
+  },
+  {
+    "name": "Environmental Exception",
+    "matchedStatuses": [ "broken", "failed" ],
+    "traceRegex": ".*EnvironmentSetupException.*"
+  },
+  {
+    "name": "Infrastructure problems",
+    "matchedStatuses": [ "failed" ],
+    "messageRegex": ".*bye-bye.*"
+  },
+  {
+    "name": "Product defects",
+    "matchedStatuses": [ "failed" ]
+  }
+]
