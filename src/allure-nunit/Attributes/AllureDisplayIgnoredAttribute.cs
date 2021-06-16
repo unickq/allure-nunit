@@ -50,6 +50,10 @@ namespace NUnit.Allure.Attributes
                         name = test.Name,
                         fullName = test.FullName,
                         status = Status.skipped,
+                        statusDetails = new StatusDetails
+                        {
+                            message = test.Name
+                        },
                         labels = new List<Label>
                         {
                             Label.Suite(_suiteName),
