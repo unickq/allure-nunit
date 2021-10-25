@@ -253,7 +253,9 @@ namespace NUnit.Allure.Core
 
             AllureLifecycle.UpdateTestCase(x => x.statusDetails = new StatusDetails
             {
-                message = TestContext.CurrentContext.Result.Message,
+                message = string.IsNullOrWhiteSpace(TestContext.CurrentContext.Result.Message)
+                ? TestContext.CurrentContext.Test.Name 
+                : TestContext.CurrentContext.Result.Message,
                 trace = TestContext.CurrentContext.Result.StackTrace
             });
 
