@@ -1,8 +1,8 @@
-name: .NET
+name: build
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, refactoring ]
   pull_request:
     branches: [ master ]
 

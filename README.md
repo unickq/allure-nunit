@@ -1,13 +1,14 @@
 # Allure NUnit adapter
 NUnit adapter for Allure Framework 
 
-[![Build status](https://ci.appveyor.com/api/projects/status/5nomj0qw25bo8gnv?svg=true)](https://ci.appveyor.com/project/unickq/allure-nunit)[![NuGet](http://flauschig.ch/nubadge.php?id=NUnit.Allure)](https://www.nuget.org/packages/NUnit.Allure)[![Steps](http://flauschig.ch/nubadge.php?id=NUnit.Allure.Steps)](https://www.nuget.org/packages/NUnit.Allure.Steps)
-
-### Allure report:
+[![build](https://github.com/unickq/allure-nunit/actions/workflows/dotnet.yml/badge.svg?branch=refactoring)](https://github.com/unickq/allure-nunit/actions/workflows/dotnet.yml)
+[![NuGet Badge](https://buildstats.info/nuget/NUnit.Allure)](https://www.nuget.org/packages/NUnit.Allure)
+[![NuGet Badge](https://buildstats.info/nuget/NUnit.Allure?includePreReleases=true)](https://www.nuget.org/packages/NUnit.Allure)
 
 ![Allure report](https://raw.githubusercontent.com/unickq/allure-nunit/master/AllureScreen.png)
 
-### Code example:
+
+### [Code examples]():
 
 ```cs
 [TestFixture(Author = "unickq", Description = "Examples")]
