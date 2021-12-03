@@ -16,7 +16,7 @@ namespace NUnit.Allure.Attributes
             TmsLink = new Link {name = name, type = "tms", url = name};
         }
 
-        internal Link TmsLink { get; }
+        private Link TmsLink { get; }
 
         public override void UpdateTestResult(TestResult testResult)
         {

@@ -11,7 +11,7 @@ namespace NUnit.Allure.Attributes
             Tags = tags;
         }
 
-        internal string[] Tags { get; }
+        private string[] Tags { get; }
 
         public override void UpdateTestResult(TestResult testResult)
         {

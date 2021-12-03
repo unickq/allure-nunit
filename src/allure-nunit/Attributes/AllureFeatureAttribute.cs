@@ -11,7 +11,7 @@ namespace NUnit.Allure.Attributes
             Features = feature;
         }
 
-        internal string[] Features { get; }
+        private string[] Features { get; }
 
         public override void UpdateTestResult(TestResult testResult)
         {

@@ -11,7 +11,7 @@ namespace NUnit.Allure.Attributes
             Severity = severity;
         }
 
-        internal SeverityLevel Severity { get; }
+        private SeverityLevel Severity { get; }
 
         public override void UpdateTestResult(TestResult testCaseResult)
         {

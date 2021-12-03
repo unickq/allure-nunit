@@ -75,9 +75,11 @@ namespace NUnit.Allure.Attributes
             }
         }
 
-        private static IEnumerable<ITest> GetAllTests(ITest test) =>
-            test.Tests.Concat(test.Tests.SelectMany(GetAllTests));
-
         public ActionTargets Targets => ActionTargets.Suite;
+
+        private static IEnumerable<ITest> GetAllTests(ITest test)
+        {
+            return test.Tests.Concat(test.Tests.SelectMany(GetAllTests));
+        }
     }
 }

@@ -1,13 +1,19 @@
 # Allure NUnit adapter
 NUnit adapter for Allure Framework 
 
-[![Build status](https://ci.appveyor.com/api/projects/status/5nomj0qw25bo8gnv?svg=true)](https://ci.appveyor.com/project/unickq/allure-nunit)[![NuGet](http://flauschig.ch/nubadge.php?id=NUnit.Allure)](https://www.nuget.org/packages/NUnit.Allure)[![Steps](http://flauschig.ch/nubadge.php?id=NUnit.Allure.Steps)](https://www.nuget.org/packages/NUnit.Allure.Steps)
+[![build](https://github.com/unickq/allure-nunit/actions/workflows/dotnet.yml/badge.svg?branch=refactoring)](https://github.com/unickq/allure-nunit/actions/workflows/dotnet.yml)
 
-### Allure report:
+[![Nuget](https://img.shields.io/nuget/v/nunit.allure?label=nuget&style=flat)](https://www.nuget.org/packages/NUnit.Allure)
+[![Nuget pre](https://img.shields.io/nuget/vpre/nunit.allure?label=nuget%20pre&style=flat)](https://www.nuget.org/packages/NUnit.Allure)
+
+![Nuget downloads](https://img.shields.io/nuget/dt/nunit.allure?label=downloads&style=flat)
+
+
 
 ![Allure report](https://raw.githubusercontent.com/unickq/allure-nunit/master/AllureScreen.png)
 
-### Code example:
+
+### [Code examples](https://github.com/unickq/allure-nunit/tree/refactoring/src/allure-nunit-tests):
 
 ```cs
 [TestFixture(Author = "unickq", Description = "Examples")]
@@ -43,16 +49,7 @@ public class Tests
             "Validate calculations");
     }
 }
-```  
-
-### ToDo:
-- [x] NET Standard 2.0 (NET 4.5 without steps)
-- [x] Parallelizable test support
-- [x] Attachments
-- [x] Allure SetUp/TearDown support
-- [x] Console Output as attached file
-- [x] Add ignored (not started) tests to results. Assert.Ignore() works :) [AllureDisplayIgnored]
-- [x] [Steps](https://github.com/unickq/allure-nunit/wiki/AllureStep) attribute for non-test methods
+```
 
 ### Installation and Usage
 - Download from Nuget with all dependencies

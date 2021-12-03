@@ -9,6 +9,7 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
 using TestResult = Allure.Commons.TestResult;
+
 // ReSharper disable AccessToModifiedClosure
 
 namespace NUnit.Allure.Core
@@ -64,9 +65,9 @@ namespace NUnit.Allure.Core
                 {
                     Label.Thread(),
                     Label.Host(),
-                    Label.TestClass(_test.ClassName),
+                    Label.Package(_test.ClassName?.Substring(0, _test.ClassName.LastIndexOf('.'))),
                     Label.TestMethod(_test.MethodName),
-                    Label.Package(_test.ClassName)
+                    Label.TestClass(_test.ClassName?.Substring(_test.ClassName.LastIndexOf('.') + 1))
                 }
             };
             AllureLifecycle.StartTestCase(_containerGuid, testResult);

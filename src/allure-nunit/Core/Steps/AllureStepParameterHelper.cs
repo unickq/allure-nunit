@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Allure.Commons;
 
-namespace NUnit.Allure.Steps
+namespace NUnit.Allure.Core.Steps
 {
-    public static class ParameterHelper
+    public static class AllureStepParameterHelper
     {
         private const string Null = "null",
             Unknown = "Unknown";

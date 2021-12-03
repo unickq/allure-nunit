@@ -2,8 +2,9 @@
 using System.Reflection;
 using Allure.Commons;
 using AspectInjector.Broker;
+using NUnit.Allure.Attributes;
 
-namespace NUnit.Allure.Steps
+namespace NUnit.Allure.Core.Steps
 {
     [Aspect(Scope.Global)]
     public class AllureStepAspect
@@ -23,8 +24,8 @@ namespace NUnit.Allure.Steps
             }
 
             var stepResult = string.IsNullOrEmpty(stepName)
-                ? new StepResult {name = name, parameters = ParameterHelper.CreateParameters(arguments)}
-                : new StepResult {name = stepName, parameters = ParameterHelper.CreateParameters(arguments)};
+                ? new StepResult {name = name, parameters = AllureStepParameterHelper.CreateParameters(arguments)}
+                : new StepResult {name = stepName, parameters = AllureStepParameterHelper.CreateParameters(arguments)};
 
             object result;
             try

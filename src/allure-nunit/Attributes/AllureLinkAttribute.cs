@@ -16,7 +16,7 @@ namespace NUnit.Allure.Attributes
             Link = new Link {name = url, type = "link", url = url};
         }
 
-        internal Link Link { get; }
+        private Link Link { get; }
 
         public override void UpdateTestResult(TestResult testResult)
         {
