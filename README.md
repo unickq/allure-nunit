@@ -13,7 +13,7 @@ NUnit adapter for Allure Framework
 ![Allure report](https://raw.githubusercontent.com/unickq/allure-nunit/master/AllureScreen.png)
 
 
-### [Code examples](https://github.com/unickq/allure-nunit/tree/refactoring/src/allure-nunit-tests):
+### [Code examples](https://github.com/unickq/allure-nunit/tree/master/src/allure-nunit-tests):
 
 ```cs
 [TestFixture(Author = "unickq", Description = "Examples")]
