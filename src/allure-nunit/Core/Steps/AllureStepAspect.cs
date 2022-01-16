@@ -20,7 +20,8 @@ namespace NUnit.Allure.Core.Steps
 
             for (var i = 0; i < arguments.Length; i++)
             {
-                stepName = stepName?.Replace("{" + i + "}", arguments[i].ToString());
+              
+                stepName = stepName?.Replace("{" + i + "}", arguments[i]?.ToString() ?? "null");
             }
 
             var stepResult = string.IsNullOrEmpty(stepName)
