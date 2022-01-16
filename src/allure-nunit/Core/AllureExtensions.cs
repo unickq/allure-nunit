@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using Allure.Commons;
 using NUnit.Framework.Internal;
+using System.Linq;
 
 namespace NUnit.Allure.Core
 {
@@ -109,6 +111,18 @@ namespace NUnit.Allure.Core
                 });
                 throw;
             }
+        }
+
+
+        /// <summary>
+        /// AllureNUnit AddScreenDiff wrapper method.
+        /// </summary>
+        public static void AddScreenDiff(this AllureLifecycle lifecycle, string expected, string actual, string diff)
+        {
+            var storageMain = lifecycle.GetType().GetField("storage", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(lifecycle);
+            var storageInternal = storageMain.GetType().GetField("storage", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(storageMain);
+            var keys = (storageInternal as System.Collections.Concurrent.ConcurrentDictionary<string, object>).Keys.ToList();
+            AllureLifecycle.Instance.AddScreenDiff(keys.Find(key => key.Contains("-tr-")), expected, actual, diff);
         }
     }
 }
