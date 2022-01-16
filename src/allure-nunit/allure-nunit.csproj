@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
-    <AssemblyVersion>1.2.0-ref2</AssemblyVersion>
-    <FileVersion>1.2.0-ref2</FileVersion>
+    <AssemblyVersion>1.2.1</AssemblyVersion>
+    <FileVersion>1.2.1</FileVersion>
     <Version>1.2.0-ref2</Version>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>Nick Chursin</Authors>
@@ -14,7 +14,7 @@
     <PackageProjectUrl>https://github.com/unickq/allure-nunit</PackageProjectUrl>
     <RepositoryUrl>https://github.com/unickq/allure-nunit</RepositoryUrl>
     <PackageTags>nunit allure</PackageTags>
-    <PackageReleaseNotes>Merged with NUnit.Allure.Steps; Removed tests from pckg</PackageReleaseNotes>
+    <PackageReleaseNotes>AllureStep fix for null - #46, Screen Diff Wrapper - #47</PackageReleaseNotes>
 	  <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
