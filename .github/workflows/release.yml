@@ -23,8 +23,8 @@ jobs:
     - name: Pack
       run: dotnet build --configuration Release /p:Version=${VERSION} --output .
       working-directory: src
-    - name: Push
-      run: dotnet nuget push NUnit.Allure.${VERSION}.nupkg -s https://api.nuget.org/v3/index.json --api-key ${NUGET_TOKEN}
-      working-directory: src
-      env:
-        NUGET_TOKEN: ${{ secrets.NUGET_TOKEN }}
+#    - name: Push
+#      run: dotnet nuget push NUnit.Allure.${VERSION}.nupkg -s https://api.nuget.org/v3/index.json --api-key ${NUGET_TOKEN}
+#      working-directory: src
+#      env:
+#        NUGET_TOKEN: ${{ secrets.NUGET_TOKEN }}
