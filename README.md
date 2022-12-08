@@ -1,4 +1,11 @@
+# Archived
+This repository is no longer maintained as the code base has been moved to [allure-csharp](https://github.com/allure-framework/allure-csharp/tree/main/Allure.NUnit) repo within [Allure Framework](https://github.com/allure-framework) organization.
+Thanks to everybody for participating :wave:
+
+[![Nuget](https://img.shields.io/nuget/v/Allure.NUnit?style=flat)](https://www.nuget.org/packages/Allure.NUnit)
+
 # Allure NUnit adapter
+
 NUnit adapter for Allure Framework 
 
 [![build](https://github.com/unickq/allure-nunit/actions/workflows/dotnet.yml/badge.svg?branch=refactoring)](https://github.com/unickq/allure-nunit/actions/workflows/dotnet.yml)
